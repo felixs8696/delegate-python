@@ -152,17 +152,6 @@ class Delegate(SyncAPIClient):
             **self._custom_headers,
         }
 
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.api_key and headers.get("Authorization"):
-            return
-        if isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
-
     def copy(
         self,
         *,
@@ -363,17 +352,6 @@ class AsyncDelegate(AsyncAPIClient):
             "X-Stainless-Async": f"async:{get_async_library()}",
             **self._custom_headers,
         }
-
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.api_key and headers.get("Authorization"):
-            return
-        if isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
 
     def copy(
         self,
