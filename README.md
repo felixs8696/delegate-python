@@ -33,6 +33,8 @@ from delegate import Delegate
 
 client = Delegate(
     api_key=os.environ.get("DELEGATE_API_KEY"),  # This is the default and can be omitted
+    # defaults to "production".
+    environment="development",
 )
 
 client = client.retrieve()
@@ -54,6 +56,8 @@ from delegate import AsyncDelegate
 
 client = AsyncDelegate(
     api_key=os.environ.get("DELEGATE_API_KEY"),  # This is the default and can be omitted
+    # defaults to "production".
+    environment="development",
 )
 
 
