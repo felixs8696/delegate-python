@@ -9,9 +9,7 @@ import pytest
 
 from delegate import Delegate, AsyncDelegate
 from tests.utils import assert_matches_type
-from delegate.types import (
-    User,
-)
+from delegate.types import User, UserListResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -22,28 +20,29 @@ class TestUsers:
     @pytest.mark.skip()
     @parametrize
     def test_method_create(self, client: Delegate) -> None:
-        user = client.users.create()
+        user = client.users.create(
+            email="email",
+            username="username",
+        )
         assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_method_create_with_all_params(self, client: Delegate) -> None:
         user = client.users.create(
-            id=10,
-            email="john@email.com",
-            first_name="John",
-            last_name="James",
-            password="12345",
-            phone="12345",
-            username="theUser",
-            user_status=1,
+            email="email",
+            username="username",
+            display_name="display_name",
         )
         assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_create(self, client: Delegate) -> None:
-        response = client.users.with_raw_response.create()
+        response = client.users.with_raw_response.create(
+            email="email",
+            username="username",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -53,7 +52,10 @@ class TestUsers:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create(self, client: Delegate) -> None:
-        with client.users.with_streaming_response.create() as response:
+        with client.users.with_streaming_response.create(
+            email="email",
+            username="username",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -66,7 +68,7 @@ class TestUsers:
     @parametrize
     def test_method_retrieve(self, client: Delegate) -> None:
         user = client.users.retrieve(
-            "username",
+            "user_id",
         )
         assert_matches_type(User, user, path=["response"])
 
@@ -74,7 +76,7 @@ class TestUsers:
     @parametrize
     def test_raw_response_retrieve(self, client: Delegate) -> None:
         response = client.users.with_raw_response.retrieve(
-            "username",
+            "user_id",
         )
 
         assert response.is_closed is True
@@ -86,7 +88,7 @@ class TestUsers:
     @parametrize
     def test_streaming_response_retrieve(self, client: Delegate) -> None:
         with client.users.with_streaming_response.retrieve(
-            "username",
+            "user_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -99,7 +101,7 @@ class TestUsers:
     @pytest.mark.skip()
     @parametrize
     def test_path_params_retrieve(self, client: Delegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `username` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
             client.users.with_raw_response.retrieve(
                 "",
             )
@@ -108,141 +110,40 @@ class TestUsers:
     @parametrize
     def test_method_update(self, client: Delegate) -> None:
         user = client.users.update(
-            existing_username="username",
+            user_id="user_id",
         )
-        assert user is None
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_method_update_with_all_params(self, client: Delegate) -> None:
         user = client.users.update(
-            existing_username="username",
-            id=10,
-            email="john@email.com",
-            first_name="John",
-            last_name="James",
-            password="12345",
-            phone="12345",
-            username="theUser",
-            user_status=1,
+            user_id="user_id",
+            display_name="display_name",
+            email="email",
+            is_active=True,
+            username="username",
         )
-        assert user is None
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_update(self, client: Delegate) -> None:
         response = client.users.with_raw_response.update(
-            existing_username="username",
+            user_id="user_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
-        assert user is None
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_update(self, client: Delegate) -> None:
         with client.users.with_streaming_response.update(
-            existing_username="username",
+            user_id="user_id",
         ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = response.parse()
-            assert user is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_path_params_update(self, client: Delegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `existing_username` but received ''"):
-            client.users.with_raw_response.update(
-                existing_username="",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_delete(self, client: Delegate) -> None:
-        user = client.users.delete(
-            "username",
-        )
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_delete(self, client: Delegate) -> None:
-        response = client.users.with_raw_response.delete(
-            "username",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_delete(self, client: Delegate) -> None:
-        with client.users.with_streaming_response.delete(
-            "username",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = response.parse()
-            assert user is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_path_params_delete(self, client: Delegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `username` but received ''"):
-            client.users.with_raw_response.delete(
-                "",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_create_with_list(self, client: Delegate) -> None:
-        user = client.users.create_with_list()
-        assert_matches_type(User, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_create_with_list_with_all_params(self, client: Delegate) -> None:
-        user = client.users.create_with_list(
-            items=[
-                {
-                    "id": 10,
-                    "email": "john@email.com",
-                    "first_name": "John",
-                    "last_name": "James",
-                    "password": "12345",
-                    "phone": "12345",
-                    "username": "theUser",
-                    "user_status": 1,
-                }
-            ],
-        )
-        assert_matches_type(User, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_create_with_list(self, client: Delegate) -> None:
-        response = client.users.with_raw_response.create_with_list()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert_matches_type(User, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_create_with_list(self, client: Delegate) -> None:
-        with client.users.with_streaming_response.create_with_list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -253,68 +154,131 @@ class TestUsers:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_login(self, client: Delegate) -> None:
-        user = client.users.login()
-        assert_matches_type(str, user, path=["response"])
+    def test_path_params_update(self, client: Delegate) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
+            client.users.with_raw_response.update(
+                user_id="",
+            )
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_login_with_all_params(self, client: Delegate) -> None:
-        user = client.users.login(
-            password="password",
-            username="username",
+    def test_method_list(self, client: Delegate) -> None:
+        user = client.users.list()
+        assert_matches_type(UserListResponse, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_list_with_all_params(self, client: Delegate) -> None:
+        user = client.users.list(
+            limit=0,
         )
-        assert_matches_type(str, user, path=["response"])
+        assert_matches_type(UserListResponse, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_login(self, client: Delegate) -> None:
-        response = client.users.with_raw_response.login()
+    def test_raw_response_list(self, client: Delegate) -> None:
+        response = client.users.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
-        assert_matches_type(str, user, path=["response"])
+        assert_matches_type(UserListResponse, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_login(self, client: Delegate) -> None:
-        with client.users.with_streaming_response.login() as response:
+    def test_streaming_response_list(self, client: Delegate) -> None:
+        with client.users.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = response.parse()
-            assert_matches_type(str, user, path=["response"])
+            assert_matches_type(UserListResponse, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_logout(self, client: Delegate) -> None:
-        user = client.users.logout()
-        assert user is None
+    def test_method_delete(self, client: Delegate) -> None:
+        user = client.users.delete(
+            "user_id",
+        )
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_logout(self, client: Delegate) -> None:
-        response = client.users.with_raw_response.logout()
+    def test_raw_response_delete(self, client: Delegate) -> None:
+        response = client.users.with_raw_response.delete(
+            "user_id",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
-        assert user is None
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_logout(self, client: Delegate) -> None:
-        with client.users.with_streaming_response.logout() as response:
+    def test_streaming_response_delete(self, client: Delegate) -> None:
+        with client.users.with_streaming_response.delete(
+            "user_id",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = response.parse()
-            assert user is None
+            assert_matches_type(User, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_path_params_delete(self, client: Delegate) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
+            client.users.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_retrieve_by_username(self, client: Delegate) -> None:
+        user = client.users.retrieve_by_username(
+            "username",
+        )
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_retrieve_by_username(self, client: Delegate) -> None:
+        response = client.users.with_raw_response.retrieve_by_username(
+            "username",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        user = response.parse()
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_retrieve_by_username(self, client: Delegate) -> None:
+        with client.users.with_streaming_response.retrieve_by_username(
+            "username",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            user = response.parse()
+            assert_matches_type(User, user, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_path_params_retrieve_by_username(self, client: Delegate) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `username` but received ''"):
+            client.users.with_raw_response.retrieve_by_username(
+                "",
+            )
 
 
 class TestAsyncUsers:
@@ -325,28 +289,29 @@ class TestAsyncUsers:
     @pytest.mark.skip()
     @parametrize
     async def test_method_create(self, async_client: AsyncDelegate) -> None:
-        user = await async_client.users.create()
+        user = await async_client.users.create(
+            email="email",
+            username="username",
+        )
         assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncDelegate) -> None:
         user = await async_client.users.create(
-            id=10,
-            email="john@email.com",
-            first_name="John",
-            last_name="James",
-            password="12345",
-            phone="12345",
-            username="theUser",
-            user_status=1,
+            email="email",
+            username="username",
+            display_name="display_name",
         )
         assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncDelegate) -> None:
-        response = await async_client.users.with_raw_response.create()
+        response = await async_client.users.with_raw_response.create(
+            email="email",
+            username="username",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -356,7 +321,10 @@ class TestAsyncUsers:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncDelegate) -> None:
-        async with async_client.users.with_streaming_response.create() as response:
+        async with async_client.users.with_streaming_response.create(
+            email="email",
+            username="username",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -369,7 +337,7 @@ class TestAsyncUsers:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDelegate) -> None:
         user = await async_client.users.retrieve(
-            "username",
+            "user_id",
         )
         assert_matches_type(User, user, path=["response"])
 
@@ -377,7 +345,7 @@ class TestAsyncUsers:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDelegate) -> None:
         response = await async_client.users.with_raw_response.retrieve(
-            "username",
+            "user_id",
         )
 
         assert response.is_closed is True
@@ -389,7 +357,7 @@ class TestAsyncUsers:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDelegate) -> None:
         async with async_client.users.with_streaming_response.retrieve(
-            "username",
+            "user_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -402,7 +370,7 @@ class TestAsyncUsers:
     @pytest.mark.skip()
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncDelegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `username` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
             await async_client.users.with_raw_response.retrieve(
                 "",
             )
@@ -411,141 +379,40 @@ class TestAsyncUsers:
     @parametrize
     async def test_method_update(self, async_client: AsyncDelegate) -> None:
         user = await async_client.users.update(
-            existing_username="username",
+            user_id="user_id",
         )
-        assert user is None
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncDelegate) -> None:
         user = await async_client.users.update(
-            existing_username="username",
-            id=10,
-            email="john@email.com",
-            first_name="John",
-            last_name="James",
-            password="12345",
-            phone="12345",
-            username="theUser",
-            user_status=1,
+            user_id="user_id",
+            display_name="display_name",
+            email="email",
+            is_active=True,
+            username="username",
         )
-        assert user is None
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncDelegate) -> None:
         response = await async_client.users.with_raw_response.update(
-            existing_username="username",
+            user_id="user_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
-        assert user is None
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncDelegate) -> None:
         async with async_client.users.with_streaming_response.update(
-            existing_username="username",
+            user_id="user_id",
         ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = await response.parse()
-            assert user is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_path_params_update(self, async_client: AsyncDelegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `existing_username` but received ''"):
-            await async_client.users.with_raw_response.update(
-                existing_username="",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_delete(self, async_client: AsyncDelegate) -> None:
-        user = await async_client.users.delete(
-            "username",
-        )
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncDelegate) -> None:
-        response = await async_client.users.with_raw_response.delete(
-            "username",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncDelegate) -> None:
-        async with async_client.users.with_streaming_response.delete(
-            "username",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = await response.parse()
-            assert user is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_path_params_delete(self, async_client: AsyncDelegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `username` but received ''"):
-            await async_client.users.with_raw_response.delete(
-                "",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_create_with_list(self, async_client: AsyncDelegate) -> None:
-        user = await async_client.users.create_with_list()
-        assert_matches_type(User, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_create_with_list_with_all_params(self, async_client: AsyncDelegate) -> None:
-        user = await async_client.users.create_with_list(
-            items=[
-                {
-                    "id": 10,
-                    "email": "john@email.com",
-                    "first_name": "John",
-                    "last_name": "James",
-                    "password": "12345",
-                    "phone": "12345",
-                    "username": "theUser",
-                    "user_status": 1,
-                }
-            ],
-        )
-        assert_matches_type(User, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_create_with_list(self, async_client: AsyncDelegate) -> None:
-        response = await async_client.users.with_raw_response.create_with_list()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert_matches_type(User, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_create_with_list(self, async_client: AsyncDelegate) -> None:
-        async with async_client.users.with_streaming_response.create_with_list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -556,65 +423,128 @@ class TestAsyncUsers:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_login(self, async_client: AsyncDelegate) -> None:
-        user = await async_client.users.login()
-        assert_matches_type(str, user, path=["response"])
+    async def test_path_params_update(self, async_client: AsyncDelegate) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
+            await async_client.users.with_raw_response.update(
+                user_id="",
+            )
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_login_with_all_params(self, async_client: AsyncDelegate) -> None:
-        user = await async_client.users.login(
-            password="password",
-            username="username",
+    async def test_method_list(self, async_client: AsyncDelegate) -> None:
+        user = await async_client.users.list()
+        assert_matches_type(UserListResponse, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_list_with_all_params(self, async_client: AsyncDelegate) -> None:
+        user = await async_client.users.list(
+            limit=0,
         )
-        assert_matches_type(str, user, path=["response"])
+        assert_matches_type(UserListResponse, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_login(self, async_client: AsyncDelegate) -> None:
-        response = await async_client.users.with_raw_response.login()
+    async def test_raw_response_list(self, async_client: AsyncDelegate) -> None:
+        response = await async_client.users.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
-        assert_matches_type(str, user, path=["response"])
+        assert_matches_type(UserListResponse, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_login(self, async_client: AsyncDelegate) -> None:
-        async with async_client.users.with_streaming_response.login() as response:
+    async def test_streaming_response_list(self, async_client: AsyncDelegate) -> None:
+        async with async_client.users.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = await response.parse()
-            assert_matches_type(str, user, path=["response"])
+            assert_matches_type(UserListResponse, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_logout(self, async_client: AsyncDelegate) -> None:
-        user = await async_client.users.logout()
-        assert user is None
+    async def test_method_delete(self, async_client: AsyncDelegate) -> None:
+        user = await async_client.users.delete(
+            "user_id",
+        )
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_logout(self, async_client: AsyncDelegate) -> None:
-        response = await async_client.users.with_raw_response.logout()
+    async def test_raw_response_delete(self, async_client: AsyncDelegate) -> None:
+        response = await async_client.users.with_raw_response.delete(
+            "user_id",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
-        assert user is None
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_logout(self, async_client: AsyncDelegate) -> None:
-        async with async_client.users.with_streaming_response.logout() as response:
+    async def test_streaming_response_delete(self, async_client: AsyncDelegate) -> None:
+        async with async_client.users.with_streaming_response.delete(
+            "user_id",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = await response.parse()
-            assert user is None
+            assert_matches_type(User, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncDelegate) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
+            await async_client.users.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_retrieve_by_username(self, async_client: AsyncDelegate) -> None:
+        user = await async_client.users.retrieve_by_username(
+            "username",
+        )
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_retrieve_by_username(self, async_client: AsyncDelegate) -> None:
+        response = await async_client.users.with_raw_response.retrieve_by_username(
+            "username",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        user = await response.parse()
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_retrieve_by_username(self, async_client: AsyncDelegate) -> None:
+        async with async_client.users.with_streaming_response.retrieve_by_username(
+            "username",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            user = await response.parse()
+            assert_matches_type(User, user, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_path_params_retrieve_by_username(self, async_client: AsyncDelegate) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `username` but received ''"):
+            await async_client.users.with_raw_response.retrieve_by_username(
+                "",
+            )

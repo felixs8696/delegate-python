@@ -2,27 +2,21 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
-
-from .._utils import PropertyInfo
+from typing import Optional
+from typing_extensions import TypedDict
 
 __all__ = ["UserUpdateParams"]
 
 
 class UserUpdateParams(TypedDict, total=False):
-    id: int
+    display_name: Optional[str]
+    """The user's display name"""
 
-    email: str
+    email: Optional[str]
+    """The user's email address"""
 
-    first_name: Annotated[str, PropertyInfo(alias="firstName")]
+    is_active: Optional[bool]
+    """Whether the user is active"""
 
-    last_name: Annotated[str, PropertyInfo(alias="lastName")]
-
-    password: str
-
-    phone: str
-
-    username: str
-
-    user_status: Annotated[int, PropertyInfo(alias="userStatus")]
-    """User Status"""
+    username: Optional[str]
+    """The user's unique username"""

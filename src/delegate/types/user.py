@@ -1,8 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Optional
-
-from pydantic import Field as FieldInfo
+from datetime import datetime
 
 from .._models import BaseModel
 
@@ -10,19 +9,23 @@ __all__ = ["User"]
 
 
 class User(BaseModel):
-    id: Optional[int] = None
+    email: str
+    """The user's email address"""
 
-    email: Optional[str] = None
+    username: str
+    """The user's unique username"""
 
-    first_name: Optional[str] = FieldInfo(alias="firstName", default=None)
+    id: Optional[str] = None
+    """The user's unique id"""
 
-    last_name: Optional[str] = FieldInfo(alias="lastName", default=None)
+    created_at: Optional[datetime] = None
+    """The timestamp when the user was created"""
 
-    password: Optional[str] = None
+    display_name: Optional[str] = None
+    """The user's display name"""
 
-    phone: Optional[str] = None
+    is_active: Optional[bool] = None
+    """Whether the user is active"""
 
-    username: Optional[str] = None
-
-    user_status: Optional[int] = FieldInfo(alias="userStatus", default=None)
-    """User Status"""
+    updated_at: Optional[datetime] = None
+    """The timestamp when the user was last updated"""
