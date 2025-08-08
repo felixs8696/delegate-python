@@ -21,7 +21,7 @@ pip install git+ssh://git@github.com/felixs8696/delegate-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install --pre delegate`
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install delegate`
 
 ## Usage
 
