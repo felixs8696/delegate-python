@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Iterable
+from typing import Optional
 
 import httpx
 
-from ..types import user_login_params, user_create_params, user_update_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
+from ..types import user_list_params, user_create_params, user_update_params
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -19,7 +19,7 @@ from .._response import (
 )
 from ..types.user import User
 from .._base_client import make_request_options
-from ..types.user_param import UserParam
+from ..types.user_list_response import UserListResponse
 
 __all__ = ["UsersResource", "AsyncUsersResource"]
 
@@ -47,14 +47,9 @@ class UsersResource(SyncAPIResource):
     def create(
         self,
         *,
-        id: int | NotGiven = NOT_GIVEN,
-        email: str | NotGiven = NOT_GIVEN,
-        first_name: str | NotGiven = NOT_GIVEN,
-        last_name: str | NotGiven = NOT_GIVEN,
-        password: str | NotGiven = NOT_GIVEN,
-        phone: str | NotGiven = NOT_GIVEN,
-        username: str | NotGiven = NOT_GIVEN,
-        user_status: int | NotGiven = NOT_GIVEN,
+        email: str,
+        username: str,
+        display_name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -63,10 +58,14 @@ class UsersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> User:
         """
-        This can only be done by the logged in user.
+        Create a new user.
 
         Args:
-          user_status: User Status
+          email: The user's email address
+
+          username: The user's unique username
+
+          display_name: The user's display name
 
           extra_headers: Send extra headers
 
@@ -77,17 +76,12 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/user",
+            "/users",
             body=maybe_transform(
                 {
-                    "id": id,
                     "email": email,
-                    "first_name": first_name,
-                    "last_name": last_name,
-                    "password": password,
-                    "phone": phone,
                     "username": username,
-                    "user_status": user_status,
+                    "display_name": display_name,
                 },
                 user_create_params.UserCreateParams,
             ),
@@ -99,7 +93,7 @@ class UsersResource(SyncAPIResource):
 
     def retrieve(
         self,
-        username: str,
+        user_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -109,7 +103,7 @@ class UsersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> User:
         """
-        Get user by user name
+        Get a user by their unique ID.
 
         Args:
           extra_headers: Send extra headers
@@ -120,10 +114,10 @@ class UsersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not username:
-            raise ValueError(f"Expected a non-empty value for `username` but received {username!r}")
+        if not user_id:
+            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         return self._get(
-            f"/user/{username}",
+            f"/users/{user_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -132,28 +126,30 @@ class UsersResource(SyncAPIResource):
 
     def update(
         self,
-        existing_username: str,
+        user_id: str,
         *,
-        id: int | NotGiven = NOT_GIVEN,
-        email: str | NotGiven = NOT_GIVEN,
-        first_name: str | NotGiven = NOT_GIVEN,
-        last_name: str | NotGiven = NOT_GIVEN,
-        password: str | NotGiven = NOT_GIVEN,
-        phone: str | NotGiven = NOT_GIVEN,
-        username: str | NotGiven = NOT_GIVEN,
-        user_status: int | NotGiven = NOT_GIVEN,
+        display_name: Optional[str] | NotGiven = NOT_GIVEN,
+        email: Optional[str] | NotGiven = NOT_GIVEN,
+        is_active: Optional[bool] | NotGiven = NOT_GIVEN,
+        username: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> User:
         """
-        This can only be done by the logged in user.
+        Update a user by their unique ID.
 
         Args:
-          user_status: User Status
+          display_name: The user's display name
+
+          email: The user's email address
+
+          is_active: Whether the user is active
+
+          username: The user's unique username
 
           extra_headers: Send extra headers
 
@@ -163,31 +159,94 @@ class UsersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not existing_username:
-            raise ValueError(f"Expected a non-empty value for `existing_username` but received {existing_username!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        if not user_id:
+            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         return self._put(
-            f"/user/{existing_username}",
+            f"/users/{user_id}",
             body=maybe_transform(
                 {
-                    "id": id,
+                    "display_name": display_name,
                     "email": email,
-                    "first_name": first_name,
-                    "last_name": last_name,
-                    "password": password,
-                    "phone": phone,
+                    "is_active": is_active,
                     "username": username,
-                    "user_status": user_status,
                 },
                 user_update_params.UserUpdateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=User,
+        )
+
+    def list(
+        self,
+        *,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserListResponse:
+        """
+        List all users.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/users",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"limit": limit}, user_list_params.UserListParams),
+            ),
+            cast_to=UserListResponse,
         )
 
     def delete(
+        self,
+        user_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> User:
+        """
+        Delete a user by their unique ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not user_id:
+            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        return self._delete(
+            f"/users/{user_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=User,
+        )
+
+    def retrieve_by_username(
         self,
         username: str,
         *,
@@ -197,9 +256,9 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> User:
         """
-        This can only be done by the logged in user.
+        Get a user by their unique username.
 
         Args:
           extra_headers: Send extra headers
@@ -212,111 +271,12 @@ class UsersResource(SyncAPIResource):
         """
         if not username:
             raise ValueError(f"Expected a non-empty value for `username` but received {username!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._delete(
-            f"/user/{username}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    def create_with_list(
-        self,
-        *,
-        items: Iterable[UserParam] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """
-        Creates list of users with given input array
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/user/createWithList",
-            body=maybe_transform(items, Iterable[UserParam]),
+        return self._get(
+            f"/users/username/{username}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=User,
-        )
-
-    def login(
-        self,
-        *,
-        password: str | NotGiven = NOT_GIVEN,
-        username: str | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> str:
-        """
-        Logs user into the system
-
-        Args:
-          password: The password for login in clear text
-
-          username: The user name for login
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/user/login",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "password": password,
-                        "username": username,
-                    },
-                    user_login_params.UserLoginParams,
-                ),
-            ),
-            cast_to=str,
-        )
-
-    def logout(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """Logs out current logged in user session"""
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._get(
-            "/user/logout",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
         )
 
 
@@ -343,14 +303,9 @@ class AsyncUsersResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        id: int | NotGiven = NOT_GIVEN,
-        email: str | NotGiven = NOT_GIVEN,
-        first_name: str | NotGiven = NOT_GIVEN,
-        last_name: str | NotGiven = NOT_GIVEN,
-        password: str | NotGiven = NOT_GIVEN,
-        phone: str | NotGiven = NOT_GIVEN,
-        username: str | NotGiven = NOT_GIVEN,
-        user_status: int | NotGiven = NOT_GIVEN,
+        email: str,
+        username: str,
+        display_name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -359,10 +314,14 @@ class AsyncUsersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> User:
         """
-        This can only be done by the logged in user.
+        Create a new user.
 
         Args:
-          user_status: User Status
+          email: The user's email address
+
+          username: The user's unique username
+
+          display_name: The user's display name
 
           extra_headers: Send extra headers
 
@@ -373,17 +332,12 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/user",
+            "/users",
             body=await async_maybe_transform(
                 {
-                    "id": id,
                     "email": email,
-                    "first_name": first_name,
-                    "last_name": last_name,
-                    "password": password,
-                    "phone": phone,
                     "username": username,
-                    "user_status": user_status,
+                    "display_name": display_name,
                 },
                 user_create_params.UserCreateParams,
             ),
@@ -395,7 +349,7 @@ class AsyncUsersResource(AsyncAPIResource):
 
     async def retrieve(
         self,
-        username: str,
+        user_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -405,7 +359,7 @@ class AsyncUsersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> User:
         """
-        Get user by user name
+        Get a user by their unique ID.
 
         Args:
           extra_headers: Send extra headers
@@ -416,10 +370,10 @@ class AsyncUsersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not username:
-            raise ValueError(f"Expected a non-empty value for `username` but received {username!r}")
+        if not user_id:
+            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         return await self._get(
-            f"/user/{username}",
+            f"/users/{user_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -428,28 +382,30 @@ class AsyncUsersResource(AsyncAPIResource):
 
     async def update(
         self,
-        existing_username: str,
+        user_id: str,
         *,
-        id: int | NotGiven = NOT_GIVEN,
-        email: str | NotGiven = NOT_GIVEN,
-        first_name: str | NotGiven = NOT_GIVEN,
-        last_name: str | NotGiven = NOT_GIVEN,
-        password: str | NotGiven = NOT_GIVEN,
-        phone: str | NotGiven = NOT_GIVEN,
-        username: str | NotGiven = NOT_GIVEN,
-        user_status: int | NotGiven = NOT_GIVEN,
+        display_name: Optional[str] | NotGiven = NOT_GIVEN,
+        email: Optional[str] | NotGiven = NOT_GIVEN,
+        is_active: Optional[bool] | NotGiven = NOT_GIVEN,
+        username: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> User:
         """
-        This can only be done by the logged in user.
+        Update a user by their unique ID.
 
         Args:
-          user_status: User Status
+          display_name: The user's display name
+
+          email: The user's email address
+
+          is_active: Whether the user is active
+
+          username: The user's unique username
 
           extra_headers: Send extra headers
 
@@ -459,31 +415,94 @@ class AsyncUsersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not existing_username:
-            raise ValueError(f"Expected a non-empty value for `existing_username` but received {existing_username!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        if not user_id:
+            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         return await self._put(
-            f"/user/{existing_username}",
+            f"/users/{user_id}",
             body=await async_maybe_transform(
                 {
-                    "id": id,
+                    "display_name": display_name,
                     "email": email,
-                    "first_name": first_name,
-                    "last_name": last_name,
-                    "password": password,
-                    "phone": phone,
+                    "is_active": is_active,
                     "username": username,
-                    "user_status": user_status,
                 },
                 user_update_params.UserUpdateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=User,
+        )
+
+    async def list(
+        self,
+        *,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserListResponse:
+        """
+        List all users.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/users",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"limit": limit}, user_list_params.UserListParams),
+            ),
+            cast_to=UserListResponse,
         )
 
     async def delete(
+        self,
+        user_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> User:
+        """
+        Delete a user by their unique ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not user_id:
+            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        return await self._delete(
+            f"/users/{user_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=User,
+        )
+
+    async def retrieve_by_username(
         self,
         username: str,
         *,
@@ -493,9 +512,9 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> User:
         """
-        This can only be done by the logged in user.
+        Get a user by their unique username.
 
         Args:
           extra_headers: Send extra headers
@@ -508,111 +527,12 @@ class AsyncUsersResource(AsyncAPIResource):
         """
         if not username:
             raise ValueError(f"Expected a non-empty value for `username` but received {username!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._delete(
-            f"/user/{username}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    async def create_with_list(
-        self,
-        *,
-        items: Iterable[UserParam] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """
-        Creates list of users with given input array
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/user/createWithList",
-            body=await async_maybe_transform(items, Iterable[UserParam]),
+        return await self._get(
+            f"/users/username/{username}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=User,
-        )
-
-    async def login(
-        self,
-        *,
-        password: str | NotGiven = NOT_GIVEN,
-        username: str | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> str:
-        """
-        Logs user into the system
-
-        Args:
-          password: The password for login in clear text
-
-          username: The user name for login
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/user/login",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "password": password,
-                        "username": username,
-                    },
-                    user_login_params.UserLoginParams,
-                ),
-            ),
-            cast_to=str,
-        )
-
-    async def logout(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """Logs out current logged in user session"""
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._get(
-            "/user/logout",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
         )
 
 
@@ -629,17 +549,14 @@ class UsersResourceWithRawResponse:
         self.update = to_raw_response_wrapper(
             users.update,
         )
+        self.list = to_raw_response_wrapper(
+            users.list,
+        )
         self.delete = to_raw_response_wrapper(
             users.delete,
         )
-        self.create_with_list = to_raw_response_wrapper(
-            users.create_with_list,
-        )
-        self.login = to_raw_response_wrapper(
-            users.login,
-        )
-        self.logout = to_raw_response_wrapper(
-            users.logout,
+        self.retrieve_by_username = to_raw_response_wrapper(
+            users.retrieve_by_username,
         )
 
 
@@ -656,17 +573,14 @@ class AsyncUsersResourceWithRawResponse:
         self.update = async_to_raw_response_wrapper(
             users.update,
         )
+        self.list = async_to_raw_response_wrapper(
+            users.list,
+        )
         self.delete = async_to_raw_response_wrapper(
             users.delete,
         )
-        self.create_with_list = async_to_raw_response_wrapper(
-            users.create_with_list,
-        )
-        self.login = async_to_raw_response_wrapper(
-            users.login,
-        )
-        self.logout = async_to_raw_response_wrapper(
-            users.logout,
+        self.retrieve_by_username = async_to_raw_response_wrapper(
+            users.retrieve_by_username,
         )
 
 
@@ -683,17 +597,14 @@ class UsersResourceWithStreamingResponse:
         self.update = to_streamed_response_wrapper(
             users.update,
         )
+        self.list = to_streamed_response_wrapper(
+            users.list,
+        )
         self.delete = to_streamed_response_wrapper(
             users.delete,
         )
-        self.create_with_list = to_streamed_response_wrapper(
-            users.create_with_list,
-        )
-        self.login = to_streamed_response_wrapper(
-            users.login,
-        )
-        self.logout = to_streamed_response_wrapper(
-            users.logout,
+        self.retrieve_by_username = to_streamed_response_wrapper(
+            users.retrieve_by_username,
         )
 
 
@@ -710,15 +621,12 @@ class AsyncUsersResourceWithStreamingResponse:
         self.update = async_to_streamed_response_wrapper(
             users.update,
         )
+        self.list = async_to_streamed_response_wrapper(
+            users.list,
+        )
         self.delete = async_to_streamed_response_wrapper(
             users.delete,
         )
-        self.create_with_list = async_to_streamed_response_wrapper(
-            users.create_with_list,
-        )
-        self.login = async_to_streamed_response_wrapper(
-            users.login,
-        )
-        self.logout = async_to_streamed_response_wrapper(
-            users.logout,
+        self.retrieve_by_username = async_to_streamed_response_wrapper(
+            users.retrieve_by_username,
         )

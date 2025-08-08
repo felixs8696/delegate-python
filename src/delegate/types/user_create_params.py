@@ -2,27 +2,18 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
-
-from .._utils import PropertyInfo
+from typing import Optional
+from typing_extensions import Required, TypedDict
 
 __all__ = ["UserCreateParams"]
 
 
 class UserCreateParams(TypedDict, total=False):
-    id: int
+    email: Required[str]
+    """The user's email address"""
 
-    email: str
+    username: Required[str]
+    """The user's unique username"""
 
-    first_name: Annotated[str, PropertyInfo(alias="firstName")]
-
-    last_name: Annotated[str, PropertyInfo(alias="lastName")]
-
-    password: str
-
-    phone: str
-
-    username: str
-
-    user_status: Annotated[int, PropertyInfo(alias="userStatus")]
-    """User Status"""
+    display_name: Optional[str]
+    """The user's display name"""

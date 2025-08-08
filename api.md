@@ -1,68 +1,192 @@
-# Shared Types
+# Delegate
+
+Methods:
+
+- <code title="get /">client.<a href="./src/delegate/_client.py">retrieve</a>() -> object</code>
+
+# Objectives
+
+Types:
 
 ```python
-from delegate.types import Order
+from delegate.types import Objective, ObjectiveListResponse
 ```
 
-# Pets
+Methods:
+
+- <code title="post /objectives">client.objectives.<a href="./src/delegate/resources/objectives/objectives.py">create</a>(\*\*<a href="src/delegate/types/objective_create_params.py">params</a>) -> <a href="./src/delegate/types/objective.py">Objective</a></code>
+- <code title="get /objectives/{objective_id}">client.objectives.<a href="./src/delegate/resources/objectives/objectives.py">retrieve</a>(objective_id) -> <a href="./src/delegate/types/objective.py">Objective</a></code>
+- <code title="get /objectives">client.objectives.<a href="./src/delegate/resources/objectives/objectives.py">list</a>() -> <a href="./src/delegate/types/objective_list_response.py">ObjectiveListResponse</a></code>
+- <code title="delete /objectives/{objective_id}">client.objectives.<a href="./src/delegate/resources/objectives/objectives.py">delete</a>(objective_id) -> <a href="./src/delegate/types/objective.py">Objective</a></code>
+- <code title="post /objectives/{objective_id}:cancel">client.objectives.<a href="./src/delegate/resources/objectives/objectives.py">cancel</a>(objective_id, \*\*<a href="src/delegate/types/objective_cancel_params.py">params</a>) -> <a href="./src/delegate/types/objective.py">Objective</a></code>
+- <code title="get /objectives/{objective_id}:stream">client.objectives.<a href="./src/delegate/resources/objectives/objectives.py">stream_events</a>(objective_id) -> object</code>
+
+## Name
+
+Methods:
+
+- <code title="get /objectives/name/{objective_name}">client.objectives.name.<a href="./src/delegate/resources/objectives/name.py">retrieve</a>(objective_name) -> <a href="./src/delegate/types/objective.py">Objective</a></code>
+- <code title="delete /objectives/name/{objective_name}">client.objectives.name.<a href="./src/delegate/resources/objectives/name.py">delete</a>(objective_name) -> <a href="./src/delegate/types/objective.py">Objective</a></code>
+- <code title="get /objectives/name/{objective_name}:stream">client.objectives.name.<a href="./src/delegate/resources/objectives/name.py">stream_events</a>(objective_name) -> object</code>
+
+# Activities
 
 Types:
 
 ```python
 from delegate.types import (
-    Category,
-    Pet,
-    PetFindByStatusResponse,
-    PetFindByTagsResponse,
-    PetUploadImageResponse,
+    DataContentEntity,
+    FileAttachment,
+    ObjectiveActivity,
+    TextContentEntity,
+    TextFormat,
+    ToolRequestContentEntity,
+    ToolResponseContentEntity,
+    ActivityListResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /pet">client.pets.<a href="./src/delegate/resources/pets.py">create</a>(\*\*<a href="src/delegate/types/pet_create_params.py">params</a>) -> <a href="./src/delegate/types/pet.py">Pet</a></code>
-- <code title="get /pet/{petId}">client.pets.<a href="./src/delegate/resources/pets.py">retrieve</a>(pet_id) -> <a href="./src/delegate/types/pet.py">Pet</a></code>
-- <code title="put /pet">client.pets.<a href="./src/delegate/resources/pets.py">update</a>(\*\*<a href="src/delegate/types/pet_update_params.py">params</a>) -> <a href="./src/delegate/types/pet.py">Pet</a></code>
-- <code title="delete /pet/{petId}">client.pets.<a href="./src/delegate/resources/pets.py">delete</a>(pet_id) -> None</code>
-- <code title="get /pet/findByStatus">client.pets.<a href="./src/delegate/resources/pets.py">find_by_status</a>(\*\*<a href="src/delegate/types/pet_find_by_status_params.py">params</a>) -> <a href="./src/delegate/types/pet_find_by_status_response.py">PetFindByStatusResponse</a></code>
-- <code title="get /pet/findByTags">client.pets.<a href="./src/delegate/resources/pets.py">find_by_tags</a>(\*\*<a href="src/delegate/types/pet_find_by_tags_params.py">params</a>) -> <a href="./src/delegate/types/pet_find_by_tags_response.py">PetFindByTagsResponse</a></code>
-- <code title="post /pet/{petId}">client.pets.<a href="./src/delegate/resources/pets.py">update_by_id</a>(pet_id, \*\*<a href="src/delegate/types/pet_update_by_id_params.py">params</a>) -> None</code>
-- <code title="post /pet/{petId}/uploadImage">client.pets.<a href="./src/delegate/resources/pets.py">upload_image</a>(pet_id, image, \*\*<a href="src/delegate/types/pet_upload_image_params.py">params</a>) -> <a href="./src/delegate/types/pet_upload_image_response.py">PetUploadImageResponse</a></code>
+- <code title="get /activities/{activity_id}">client.activities.<a href="./src/delegate/resources/activities.py">retrieve</a>(activity_id) -> <a href="./src/delegate/types/objective_activity.py">ObjectiveActivity</a></code>
+- <code title="get /activities">client.activities.<a href="./src/delegate/resources/activities.py">list</a>(\*\*<a href="src/delegate/types/activity_list_params.py">params</a>) -> <a href="./src/delegate/types/activity_list_response.py">ActivityListResponse</a></code>
 
-# Store
+# Spans
 
 Types:
 
 ```python
-from delegate.types import StoreListInventoryResponse
+from delegate.types import Span, SpanListResponse
 ```
 
 Methods:
 
-- <code title="get /store/inventory">client.store.<a href="./src/delegate/resources/store/store.py">list_inventory</a>() -> <a href="./src/delegate/types/store_list_inventory_response.py">StoreListInventoryResponse</a></code>
+- <code title="post /spans">client.spans.<a href="./src/delegate/resources/spans.py">create</a>(\*\*<a href="src/delegate/types/span_create_params.py">params</a>) -> <a href="./src/delegate/types/span.py">Span</a></code>
+- <code title="get /spans/{span_id}">client.spans.<a href="./src/delegate/resources/spans.py">retrieve</a>(span_id) -> <a href="./src/delegate/types/span.py">Span</a></code>
+- <code title="patch /spans/{span_id}">client.spans.<a href="./src/delegate/resources/spans.py">update</a>(span_id, \*\*<a href="src/delegate/types/span_update_params.py">params</a>) -> <a href="./src/delegate/types/span.py">Span</a></code>
+- <code title="get /spans">client.spans.<a href="./src/delegate/resources/spans.py">list</a>(\*\*<a href="src/delegate/types/span_list_params.py">params</a>) -> <a href="./src/delegate/types/span_list_response.py">SpanListResponse</a></code>
 
-## Orders
+# States
+
+Types:
+
+```python
+from delegate.types import State, StateListResponse
+```
 
 Methods:
 
-- <code title="post /store/order">client.store.orders.<a href="./src/delegate/resources/store/orders.py">create</a>(\*\*<a href="src/delegate/types/store/order_create_params.py">params</a>) -> <a href="./src/delegate/types/shared/order.py">Order</a></code>
-- <code title="get /store/order/{orderId}">client.store.orders.<a href="./src/delegate/resources/store/orders.py">retrieve</a>(order_id) -> <a href="./src/delegate/types/shared/order.py">Order</a></code>
-- <code title="delete /store/order/{orderId}">client.store.orders.<a href="./src/delegate/resources/store/orders.py">delete</a>(order_id) -> None</code>
+- <code title="post /states">client.states.<a href="./src/delegate/resources/states.py">create</a>(\*\*<a href="src/delegate/types/state_create_params.py">params</a>) -> <a href="./src/delegate/types/state.py">State</a></code>
+- <code title="get /states/{state_id}">client.states.<a href="./src/delegate/resources/states.py">retrieve</a>(state_id) -> <a href="./src/delegate/types/state.py">State</a></code>
+- <code title="put /states/{state_id}">client.states.<a href="./src/delegate/resources/states.py">update</a>(state_id, \*\*<a href="src/delegate/types/state_update_params.py">params</a>) -> <a href="./src/delegate/types/state.py">State</a></code>
+- <code title="get /states">client.states.<a href="./src/delegate/resources/states.py">list</a>(\*\*<a href="src/delegate/types/state_list_params.py">params</a>) -> <a href="./src/delegate/types/state_list_response.py">StateListResponse</a></code>
+- <code title="delete /states/{state_id}">client.states.<a href="./src/delegate/resources/states.py">delete</a>(state_id) -> <a href="./src/delegate/types/state.py">State</a></code>
+
+# Events
+
+Types:
+
+```python
+from delegate.types import Event, EventListResponse
+```
+
+Methods:
+
+- <code title="post /events">client.events.<a href="./src/delegate/resources/events.py">create</a>(\*\*<a href="src/delegate/types/event_create_params.py">params</a>) -> <a href="./src/delegate/types/event.py">Event</a></code>
+- <code title="get /events/{event_id}">client.events.<a href="./src/delegate/resources/events.py">retrieve</a>(event_id) -> <a href="./src/delegate/types/event.py">Event</a></code>
+- <code title="get /events">client.events.<a href="./src/delegate/resources/events.py">list</a>(\*\*<a href="src/delegate/types/event_list_params.py">params</a>) -> <a href="./src/delegate/types/event_list_response.py">EventListResponse</a></code>
+
+# Contexts
+
+Types:
+
+```python
+from delegate.types import Context, ContextCreateResponse, ContextListResponse, ContextChatResponse
+```
+
+Methods:
+
+- <code title="post /contexts">client.contexts.<a href="./src/delegate/resources/contexts.py">create</a>() -> <a href="./src/delegate/types/context_create_response.py">ContextCreateResponse</a></code>
+- <code title="get /contexts/{context_id}">client.contexts.<a href="./src/delegate/resources/contexts.py">retrieve</a>(context_id) -> <a href="./src/delegate/types/context.py">Context</a></code>
+- <code title="patch /contexts/{context_id}">client.contexts.<a href="./src/delegate/resources/contexts.py">update</a>(context_id, \*\*<a href="src/delegate/types/context_update_params.py">params</a>) -> <a href="./src/delegate/types/context.py">Context</a></code>
+- <code title="get /contexts">client.contexts.<a href="./src/delegate/resources/contexts.py">list</a>() -> <a href="./src/delegate/types/context_list_response.py">ContextListResponse</a></code>
+- <code title="delete /contexts/{context_id}">client.contexts.<a href="./src/delegate/resources/contexts.py">delete</a>(context_id) -> object</code>
+- <code title="post /contexts/{context_id}:chat">client.contexts.<a href="./src/delegate/resources/contexts.py">chat</a>(context_id, \*\*<a href="src/delegate/types/context_chat_params.py">params</a>) -> <a href="./src/delegate/types/context_chat_response.py">ContextChatResponse</a></code>
 
 # Users
 
 Types:
 
 ```python
-from delegate.types import User, UserLoginResponse
+from delegate.types import User, UserListResponse
 ```
 
 Methods:
 
-- <code title="post /user">client.users.<a href="./src/delegate/resources/users.py">create</a>(\*\*<a href="src/delegate/types/user_create_params.py">params</a>) -> <a href="./src/delegate/types/user.py">User</a></code>
-- <code title="get /user/{username}">client.users.<a href="./src/delegate/resources/users.py">retrieve</a>(username) -> <a href="./src/delegate/types/user.py">User</a></code>
-- <code title="put /user/{username}">client.users.<a href="./src/delegate/resources/users.py">update</a>(existing_username, \*\*<a href="src/delegate/types/user_update_params.py">params</a>) -> None</code>
-- <code title="delete /user/{username}">client.users.<a href="./src/delegate/resources/users.py">delete</a>(username) -> None</code>
-- <code title="post /user/createWithList">client.users.<a href="./src/delegate/resources/users.py">create_with_list</a>(\*\*<a href="src/delegate/types/user_create_with_list_params.py">params</a>) -> <a href="./src/delegate/types/user.py">User</a></code>
-- <code title="get /user/login">client.users.<a href="./src/delegate/resources/users.py">login</a>(\*\*<a href="src/delegate/types/user_login_params.py">params</a>) -> str</code>
-- <code title="get /user/logout">client.users.<a href="./src/delegate/resources/users.py">logout</a>() -> None</code>
+- <code title="post /users">client.users.<a href="./src/delegate/resources/users.py">create</a>(\*\*<a href="src/delegate/types/user_create_params.py">params</a>) -> <a href="./src/delegate/types/user.py">User</a></code>
+- <code title="get /users/{user_id}">client.users.<a href="./src/delegate/resources/users.py">retrieve</a>(user_id) -> <a href="./src/delegate/types/user.py">User</a></code>
+- <code title="put /users/{user_id}">client.users.<a href="./src/delegate/resources/users.py">update</a>(user_id, \*\*<a href="src/delegate/types/user_update_params.py">params</a>) -> <a href="./src/delegate/types/user.py">User</a></code>
+- <code title="get /users">client.users.<a href="./src/delegate/resources/users.py">list</a>(\*\*<a href="src/delegate/types/user_list_params.py">params</a>) -> <a href="./src/delegate/types/user_list_response.py">UserListResponse</a></code>
+- <code title="delete /users/{user_id}">client.users.<a href="./src/delegate/resources/users.py">delete</a>(user_id) -> <a href="./src/delegate/types/user.py">User</a></code>
+- <code title="get /users/username/{username}">client.users.<a href="./src/delegate/resources/users.py">retrieve_by_username</a>(username) -> <a href="./src/delegate/types/user.py">User</a></code>
+
+# Channels
+
+Types:
+
+```python
+from delegate.types import Channel, ChannelMembership, ChannelListResponse
+```
+
+Methods:
+
+- <code title="post /channels">client.channels.<a href="./src/delegate/resources/channels/channels.py">create</a>(\*\*<a href="src/delegate/types/channel_create_params.py">params</a>) -> <a href="./src/delegate/types/channel.py">Channel</a></code>
+- <code title="get /channels/{channel_id}">client.channels.<a href="./src/delegate/resources/channels/channels.py">retrieve</a>(channel_id) -> <a href="./src/delegate/types/channel.py">Channel</a></code>
+- <code title="put /channels/{channel_id}">client.channels.<a href="./src/delegate/resources/channels/channels.py">update</a>(channel_id, \*\*<a href="src/delegate/types/channel_update_params.py">params</a>) -> <a href="./src/delegate/types/channel.py">Channel</a></code>
+- <code title="get /channels">client.channels.<a href="./src/delegate/resources/channels/channels.py">list</a>(\*\*<a href="src/delegate/types/channel_list_params.py">params</a>) -> <a href="./src/delegate/types/channel_list_response.py">ChannelListResponse</a></code>
+- <code title="delete /channels/{channel_id}">client.channels.<a href="./src/delegate/resources/channels/channels.py">delete</a>(channel_id) -> <a href="./src/delegate/types/channel.py">Channel</a></code>
+- <code title="post /channels/{channel_id}:join">client.channels.<a href="./src/delegate/resources/channels/channels.py">join</a>(channel_id, \*\*<a href="src/delegate/types/channel_join_params.py">params</a>) -> <a href="./src/delegate/types/channel_membership.py">ChannelMembership</a></code>
+- <code title="post /channels/{channel_id}:leave">client.channels.<a href="./src/delegate/resources/channels/channels.py">leave</a>(channel_id, \*\*<a href="src/delegate/types/channel_leave_params.py">params</a>) -> <a href="./src/delegate/types/channel_membership.py">ChannelMembership</a></code>
+- <code title="get /channels/name/{channel_name}">client.channels.<a href="./src/delegate/resources/channels/channels.py">retrieve_by_name</a>(channel_name) -> <a href="./src/delegate/types/channel.py">Channel</a></code>
+
+## Members
+
+Types:
+
+```python
+from delegate.types.channels import MemberListResponse
+```
+
+Methods:
+
+- <code title="put /channels/{channel_id}/members/{user_id}">client.channels.members.<a href="./src/delegate/resources/channels/members.py">update</a>(user_id, \*, channel_id, \*\*<a href="src/delegate/types/channels/member_update_params.py">params</a>) -> <a href="./src/delegate/types/channel_membership.py">ChannelMembership</a></code>
+- <code title="get /channels/{channel_id}/members">client.channels.members.<a href="./src/delegate/resources/channels/members.py">list</a>(channel_id, \*\*<a href="src/delegate/types/channels/member_list_params.py">params</a>) -> <a href="./src/delegate/types/channels/member_list_response.py">MemberListResponse</a></code>
+
+# ChannelMessages
+
+Types:
+
+```python
+from delegate.types import ChannelMessage, CreateChannelMessage, ChannelMessageListResponse
+```
+
+Methods:
+
+- <code title="post /channel-messages">client.channel_messages.<a href="./src/delegate/resources/channel_messages/channel_messages.py">create</a>(\*\*<a href="src/delegate/types/channel_message_create_params.py">params</a>) -> <a href="./src/delegate/types/channel_message.py">ChannelMessage</a></code>
+- <code title="get /channel-messages/{message_id}">client.channel_messages.<a href="./src/delegate/resources/channel_messages/channel_messages.py">retrieve</a>(message_id) -> <a href="./src/delegate/types/channel_message.py">ChannelMessage</a></code>
+- <code title="put /channel-messages/{message_id}">client.channel_messages.<a href="./src/delegate/resources/channel_messages/channel_messages.py">update</a>(message_id, \*\*<a href="src/delegate/types/channel_message_update_params.py">params</a>) -> <a href="./src/delegate/types/channel_message.py">ChannelMessage</a></code>
+- <code title="get /channel-messages">client.channel_messages.<a href="./src/delegate/resources/channel_messages/channel_messages.py">list</a>(\*\*<a href="src/delegate/types/channel_message_list_params.py">params</a>) -> <a href="./src/delegate/types/channel_message_list_response.py">ChannelMessageListResponse</a></code>
+- <code title="delete /channel-messages/{message_id}">client.channel_messages.<a href="./src/delegate/resources/channel_messages/channel_messages.py">delete</a>(message_id) -> <a href="./src/delegate/types/channel_message.py">ChannelMessage</a></code>
+
+## Batch
+
+Types:
+
+```python
+from delegate.types.channel_messages import BatchCreateResponse, BatchUpdateResponse
+```
+
+Methods:
+
+- <code title="post /channel-messages/batch">client.channel_messages.batch.<a href="./src/delegate/resources/channel_messages/batch.py">create</a>(\*\*<a href="src/delegate/types/channel_messages/batch_create_params.py">params</a>) -> <a href="./src/delegate/types/channel_messages/batch_create_response.py">BatchCreateResponse</a></code>
+- <code title="put /channel-messages/batch">client.channel_messages.batch.<a href="./src/delegate/resources/channel_messages/batch.py">update</a>(\*\*<a href="src/delegate/types/channel_messages/batch_update_params.py">params</a>) -> <a href="./src/delegate/types/channel_messages/batch_update_response.py">BatchUpdateResponse</a></code>

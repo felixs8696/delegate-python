@@ -32,20 +32,15 @@ import os
 from delegate import Delegate
 
 client = Delegate(
-    api_key=os.environ.get("PETSTORE_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("DELEGATE_API_KEY"),  # This is the default and can be omitted
 )
 
-order = client.store.orders.create(
-    pet_id=1,
-    quantity=1,
-    status="placed",
-)
-print(order.id)
+client = client.retrieve()
 ```
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `PETSTORE_API_KEY="My API Key"` to your `.env` file
+to add `DELEGATE_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
@@ -58,17 +53,12 @@ import asyncio
 from delegate import AsyncDelegate
 
 client = AsyncDelegate(
-    api_key=os.environ.get("PETSTORE_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("DELEGATE_API_KEY"),  # This is the default and can be omitted
 )
 
 
 async def main() -> None:
-    order = await client.store.orders.create(
-        pet_id=1,
-        quantity=1,
-        status="placed",
-    )
-    print(order.id)
+    client = await client.retrieve()
 
 
 asyncio.run(main())
@@ -100,12 +90,7 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        order = await client.store.orders.create(
-            pet_id=1,
-            quantity=1,
-            status="placed",
-        )
-        print(order.id)
+        client = await client.retrieve()
 
 
 asyncio.run(main())
@@ -129,12 +114,12 @@ from delegate import Delegate
 
 client = Delegate()
 
-pet = client.pets.create(
-    name="doggie",
-    photo_urls=["string"],
-    category={},
+response = client.contexts.chat(
+    context_id="context_id",
+    content="content",
+    context={},
 )
-print(pet.category)
+print(response.context)
 ```
 
 ## Handling errors
@@ -153,7 +138,7 @@ from delegate import Delegate
 client = Delegate()
 
 try:
-    client.store.list_inventory()
+    client.retrieve()
 except delegate.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -196,7 +181,7 @@ client = Delegate(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).store.list_inventory()
+client.with_options(max_retries=5).retrieve()
 ```
 
 ### Timeouts
@@ -219,7 +204,7 @@ client = Delegate(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).store.list_inventory()
+client.with_options(timeout=5.0).retrieve()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -260,11 +245,11 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from delegate import Delegate
 
 client = Delegate()
-response = client.store.with_raw_response.list_inventory()
+response = client.with_raw_response.retrieve()
 print(response.headers.get('X-My-Header'))
 
-store = response.parse()  # get the object that `store.list_inventory()` would have returned
-print(store)
+client = response.parse()  # get the object that `retrieve()` would have returned
+print(client)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/delegate-python/tree/main/src/delegate/_response.py) object.
@@ -278,7 +263,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.store.with_streaming_response.list_inventory() as response:
+with client.with_streaming_response.retrieve() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
