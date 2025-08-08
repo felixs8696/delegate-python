@@ -560,6 +560,16 @@ class TestDelegate:
             client = Delegate(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
+        # explicit environment arg requires explicitness
+        with update_env(DELEGATE_BASE_URL="http://localhost:5000/from/env"):
+            with pytest.raises(ValueError, match=r"you must pass base_url=None"):
+                Delegate(api_key=api_key, _strict_response_validation=True, environment="production")
+
+            client = Delegate(
+                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
+            )
+            assert str(client.base_url).startswith("http://localhost:5003")
+
     @pytest.mark.parametrize(
         "client",
         [
@@ -1362,6 +1372,16 @@ class TestAsyncDelegate:
         with update_env(DELEGATE_BASE_URL="http://localhost:5000/from/env"):
             client = AsyncDelegate(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
+
+        # explicit environment arg requires explicitness
+        with update_env(DELEGATE_BASE_URL="http://localhost:5000/from/env"):
+            with pytest.raises(ValueError, match=r"you must pass base_url=None"):
+                AsyncDelegate(api_key=api_key, _strict_response_validation=True, environment="production")
+
+            client = AsyncDelegate(
+                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
+            )
+            assert str(client.base_url).startswith("http://localhost:5003")
 
     @pytest.mark.parametrize(
         "client",
