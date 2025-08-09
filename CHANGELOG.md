@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0 (2025-08-09)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/felixs8696/delegate-python/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** update via SDK Studio ([44297ae](https://github.com/felixs8696/delegate-python/commit/44297aef962d45c4cdc27d11632a12e71189170b))
+
+
+### Chores
+
+* update @stainless-api/prism-cli to v5.15.0 ([91d43d0](https://github.com/felixs8696/delegate-python/commit/91d43d06d896353e3ba631d756533cf825bb1326))
+
 ## 0.3.0 (2025-08-08)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/felixs8696/delegate-python/compare/v0.2.0...v0.3.0)
