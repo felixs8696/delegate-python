@@ -48,6 +48,7 @@ from delegate.types import (
 
 Methods:
 
+- <code title="post /activities">client.activities.<a href="./src/delegate/resources/activities.py">create</a>(\*\*<a href="src/delegate/types/activity_create_params.py">params</a>) -> <a href="./src/delegate/types/objective_activity.py">ObjectiveActivity</a></code>
 - <code title="get /activities/{activity_id}">client.activities.<a href="./src/delegate/resources/activities.py">retrieve</a>(activity_id) -> <a href="./src/delegate/types/objective_activity.py">ObjectiveActivity</a></code>
 - <code title="get /activities">client.activities.<a href="./src/delegate/resources/activities.py">list</a>(\*\*<a href="src/delegate/types/activity_list_params.py">params</a>) -> <a href="./src/delegate/types/activity_list_response.py">ActivityListResponse</a></code>
 

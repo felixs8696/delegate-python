@@ -43,6 +43,7 @@ from .context_chat_response import ContextChatResponse as ContextChatResponse
 from .context_list_response import ContextListResponse as ContextListResponse
 from .context_update_params import ContextUpdateParams as ContextUpdateParams
 from .file_attachment_param import FileAttachmentParam as FileAttachmentParam
+from .activity_create_params import ActivityCreateParams as ActivityCreateParams
 from .activity_list_response import ActivityListResponse as ActivityListResponse
 from .context_create_response import ContextCreateResponse as ContextCreateResponse
 from .objective_cancel_params import ObjectiveCancelParams as ObjectiveCancelParams
