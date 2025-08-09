@@ -19,6 +19,65 @@ class TestActivities:
 
     @pytest.mark.skip()
     @parametrize
+    def test_method_create(self, client: Delegate) -> None:
+        activity = client.activities.create(
+            objective_id="objective_id",
+            content={"content": "content"},
+        )
+        assert_matches_type(ObjectiveActivity, activity, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_create_with_all_params(self, client: Delegate) -> None:
+        activity = client.activities.create(
+            objective_id="objective_id",
+            content={
+                "content": "content",
+                "attachments": [
+                    {
+                        "file_id": "file_id",
+                        "name": "name",
+                        "size": 0,
+                        "type": "type",
+                    }
+                ],
+                "format": "markdown",
+                "type": "text",
+            },
+            streaming_status="IN_PROGRESS",
+        )
+        assert_matches_type(ObjectiveActivity, activity, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_create(self, client: Delegate) -> None:
+        response = client.activities.with_raw_response.create(
+            objective_id="objective_id",
+            content={"content": "content"},
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        activity = response.parse()
+        assert_matches_type(ObjectiveActivity, activity, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_create(self, client: Delegate) -> None:
+        with client.activities.with_streaming_response.create(
+            objective_id="objective_id",
+            content={"content": "content"},
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            activity = response.parse()
+            assert_matches_type(ObjectiveActivity, activity, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
     def test_method_retrieve(self, client: Delegate) -> None:
         activity = client.activities.retrieve(
             "activity_id",
@@ -107,6 +166,65 @@ class TestAsyncActivities:
     parametrize = pytest.mark.parametrize(
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_create(self, async_client: AsyncDelegate) -> None:
+        activity = await async_client.activities.create(
+            objective_id="objective_id",
+            content={"content": "content"},
+        )
+        assert_matches_type(ObjectiveActivity, activity, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncDelegate) -> None:
+        activity = await async_client.activities.create(
+            objective_id="objective_id",
+            content={
+                "content": "content",
+                "attachments": [
+                    {
+                        "file_id": "file_id",
+                        "name": "name",
+                        "size": 0,
+                        "type": "type",
+                    }
+                ],
+                "format": "markdown",
+                "type": "text",
+            },
+            streaming_status="IN_PROGRESS",
+        )
+        assert_matches_type(ObjectiveActivity, activity, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncDelegate) -> None:
+        response = await async_client.activities.with_raw_response.create(
+            objective_id="objective_id",
+            content={"content": "content"},
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        activity = await response.parse()
+        assert_matches_type(ObjectiveActivity, activity, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncDelegate) -> None:
+        async with async_client.activities.with_streaming_response.create(
+            objective_id="objective_id",
+            content={"content": "content"},
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            activity = await response.parse()
+            assert_matches_type(ObjectiveActivity, activity, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
