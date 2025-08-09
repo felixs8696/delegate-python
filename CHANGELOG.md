@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2025-08-09)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/felixs8696/delegate-python/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* **internal:** update comment in script ([f84b754](https://github.com/felixs8696/delegate-python/commit/f84b7544491f50b622858f19b4110b004f6682bf))
+
 ## 0.4.0 (2025-08-09)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/felixs8696/delegate-python/compare/v0.3.0...v0.4.0)
