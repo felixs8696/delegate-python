@@ -1,28 +1,27 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
-from typing_extensions import Literal
+from __future__ import annotations
 
-from .._models import BaseModel
+from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["ToolResponseContentEntity"]
+__all__ = ["ToolResponseContentEntityParam"]
 
 
-class ToolResponseContentEntity(BaseModel):
-    author: Literal["system", "user", "assistant"]
+class ToolResponseContentEntityParam(TypedDict, total=False):
+    author: Required[Literal["system", "user", "assistant"]]
     """
     The role of the messages author, in this case `system`, `user`, `assistant`, or
     `tool`.
     """
 
-    content: object
+    content: Required[object]
     """The result of the tool."""
 
-    name: str
+    name: Required[str]
     """The name of the tool that is being responded to."""
 
-    tool_call_id: str
+    tool_call_id: Required[str]
     """The ID of the tool call that is being responded to."""
 
-    type: Optional[Literal["tool_response"]] = None
+    type: Literal["tool_response"]
     """The type of the message, in this case `tool_response`."""

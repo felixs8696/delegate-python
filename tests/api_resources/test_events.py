@@ -21,7 +21,11 @@ class TestEvents:
     @parametrize
     def test_method_create(self, client: Delegate) -> None:
         event = client.events.create(
-            content={"content": "content"},
+            content={
+                "author": "system",
+                "content": "content",
+                "type": "text",
+            },
             objective_id="objective_id",
         )
         assert_matches_type(Event, event, path=["response"])
@@ -31,16 +35,8 @@ class TestEvents:
     def test_method_create_with_all_params(self, client: Delegate) -> None:
         event = client.events.create(
             content={
+                "author": "system",
                 "content": "content",
-                "attachments": [
-                    {
-                        "file_id": "file_id",
-                        "name": "name",
-                        "size": 0,
-                        "type": "type",
-                    }
-                ],
-                "format": "markdown",
                 "type": "text",
             },
             objective_id="objective_id",
@@ -51,7 +47,11 @@ class TestEvents:
     @parametrize
     def test_raw_response_create(self, client: Delegate) -> None:
         response = client.events.with_raw_response.create(
-            content={"content": "content"},
+            content={
+                "author": "system",
+                "content": "content",
+                "type": "text",
+            },
             objective_id="objective_id",
         )
 
@@ -64,7 +64,11 @@ class TestEvents:
     @parametrize
     def test_streaming_response_create(self, client: Delegate) -> None:
         with client.events.with_streaming_response.create(
-            content={"content": "content"},
+            content={
+                "author": "system",
+                "content": "content",
+                "type": "text",
+            },
             objective_id="objective_id",
         ) as response:
             assert not response.is_closed
@@ -171,7 +175,11 @@ class TestAsyncEvents:
     @parametrize
     async def test_method_create(self, async_client: AsyncDelegate) -> None:
         event = await async_client.events.create(
-            content={"content": "content"},
+            content={
+                "author": "system",
+                "content": "content",
+                "type": "text",
+            },
             objective_id="objective_id",
         )
         assert_matches_type(Event, event, path=["response"])
@@ -181,16 +189,8 @@ class TestAsyncEvents:
     async def test_method_create_with_all_params(self, async_client: AsyncDelegate) -> None:
         event = await async_client.events.create(
             content={
+                "author": "system",
                 "content": "content",
-                "attachments": [
-                    {
-                        "file_id": "file_id",
-                        "name": "name",
-                        "size": 0,
-                        "type": "type",
-                    }
-                ],
-                "format": "markdown",
                 "type": "text",
             },
             objective_id="objective_id",
@@ -201,7 +201,11 @@ class TestAsyncEvents:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncDelegate) -> None:
         response = await async_client.events.with_raw_response.create(
-            content={"content": "content"},
+            content={
+                "author": "system",
+                "content": "content",
+                "type": "text",
+            },
             objective_id="objective_id",
         )
 
@@ -214,7 +218,11 @@ class TestAsyncEvents:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncDelegate) -> None:
         async with async_client.events.with_streaming_response.create(
-            content={"content": "content"},
+            content={
+                "author": "system",
+                "content": "content",
+                "type": "text",
+            },
             objective_id="objective_id",
         ) as response:
             assert not response.is_closed

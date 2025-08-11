@@ -40,22 +40,6 @@ from .channels import (
     ChannelsResourceWithStreamingResponse,
     AsyncChannelsResourceWithStreamingResponse,
 )
-from .contexts import (
-    ContextsResource,
-    AsyncContextsResource,
-    ContextsResourceWithRawResponse,
-    AsyncContextsResourceWithRawResponse,
-    ContextsResourceWithStreamingResponse,
-    AsyncContextsResourceWithStreamingResponse,
-)
-from .activities import (
-    ActivitiesResource,
-    AsyncActivitiesResource,
-    ActivitiesResourceWithRawResponse,
-    AsyncActivitiesResourceWithRawResponse,
-    ActivitiesResourceWithStreamingResponse,
-    AsyncActivitiesResourceWithStreamingResponse,
-)
 from .objectives import (
     ObjectivesResource,
     AsyncObjectivesResource,
@@ -63,14 +47,6 @@ from .objectives import (
     AsyncObjectivesResourceWithRawResponse,
     ObjectivesResourceWithStreamingResponse,
     AsyncObjectivesResourceWithStreamingResponse,
-)
-from .channel_messages import (
-    ChannelMessagesResource,
-    AsyncChannelMessagesResource,
-    ChannelMessagesResourceWithRawResponse,
-    AsyncChannelMessagesResourceWithRawResponse,
-    ChannelMessagesResourceWithStreamingResponse,
-    AsyncChannelMessagesResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -80,12 +56,6 @@ __all__ = [
     "AsyncObjectivesResourceWithRawResponse",
     "ObjectivesResourceWithStreamingResponse",
     "AsyncObjectivesResourceWithStreamingResponse",
-    "ActivitiesResource",
-    "AsyncActivitiesResource",
-    "ActivitiesResourceWithRawResponse",
-    "AsyncActivitiesResourceWithRawResponse",
-    "ActivitiesResourceWithStreamingResponse",
-    "AsyncActivitiesResourceWithStreamingResponse",
     "SpansResource",
     "AsyncSpansResource",
     "SpansResourceWithRawResponse",
@@ -104,12 +74,6 @@ __all__ = [
     "AsyncEventsResourceWithRawResponse",
     "EventsResourceWithStreamingResponse",
     "AsyncEventsResourceWithStreamingResponse",
-    "ContextsResource",
-    "AsyncContextsResource",
-    "ContextsResourceWithRawResponse",
-    "AsyncContextsResourceWithRawResponse",
-    "ContextsResourceWithStreamingResponse",
-    "AsyncContextsResourceWithStreamingResponse",
     "UsersResource",
     "AsyncUsersResource",
     "UsersResourceWithRawResponse",
@@ -122,10 +86,4 @@ __all__ = [
     "AsyncChannelsResourceWithRawResponse",
     "ChannelsResourceWithStreamingResponse",
     "AsyncChannelsResourceWithStreamingResponse",
-    "ChannelMessagesResource",
-    "AsyncChannelMessagesResource",
-    "ChannelMessagesResourceWithRawResponse",
-    "AsyncChannelMessagesResourceWithRawResponse",
-    "ChannelMessagesResourceWithStreamingResponse",
-    "AsyncChannelMessagesResourceWithStreamingResponse",
 ]
