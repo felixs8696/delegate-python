@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -49,7 +50,7 @@ class MembersResource(SyncAPIResource):
         user_id: str,
         *,
         channel_id: str,
-        role: str,
+        role: Literal["member", "admin", "owner"],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -148,7 +149,7 @@ class AsyncMembersResource(AsyncAPIResource):
         user_id: str,
         *,
         channel_id: str,
-        role: str,
+        role: Literal["member", "admin", "owner"],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

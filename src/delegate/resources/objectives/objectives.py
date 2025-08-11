@@ -6,15 +6,7 @@ from typing import Optional
 
 import httpx
 
-from .name import (
-    NameResource,
-    AsyncNameResource,
-    NameResourceWithRawResponse,
-    AsyncNameResourceWithRawResponse,
-    NameResourceWithStreamingResponse,
-    AsyncNameResourceWithStreamingResponse,
-)
-from ...types import objective_cancel_params, objective_create_params
+from ...types import objective_list_params, objective_cancel_params, objective_create_params
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
@@ -33,10 +25,6 @@ __all__ = ["ObjectivesResource", "AsyncObjectivesResource"]
 
 
 class ObjectivesResource(SyncAPIResource):
-    @cached_property
-    def name(self) -> NameResource:
-        return NameResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> ObjectivesResourceWithRawResponse:
         """
@@ -59,8 +47,7 @@ class ObjectivesResource(SyncAPIResource):
     def create(
         self,
         *,
-        context_id: Optional[str] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
+        name: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -82,13 +69,7 @@ class ObjectivesResource(SyncAPIResource):
         """
         return self._post(
             "/objectives",
-            body=maybe_transform(
-                {
-                    "context_id": context_id,
-                    "name": name,
-                },
-                objective_create_params.ObjectiveCreateParams,
-            ),
+            body=maybe_transform({"name": name}, objective_create_params.ObjectiveCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -107,7 +88,7 @@ class ObjectivesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> Objective:
         """
-        Get an objective by its unique ID.
+        Get an objective by its unique ID with channel data.
 
         Args:
           extra_headers: Send extra headers
@@ -131,6 +112,8 @@ class ObjectivesResource(SyncAPIResource):
     def list(
         self,
         *,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        offset: Optional[int] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -138,11 +121,32 @@ class ObjectivesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ObjectiveListResponse:
-        """List all objectives."""
+        """
+        List all objectives with channel data.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return self._get(
             "/objectives",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "limit": limit,
+                        "offset": offset,
+                    },
+                    objective_list_params.ObjectiveListParams,
+                ),
             ),
             cast_to=ObjectiveListResponse,
         )
@@ -251,10 +255,6 @@ class ObjectivesResource(SyncAPIResource):
 
 class AsyncObjectivesResource(AsyncAPIResource):
     @cached_property
-    def name(self) -> AsyncNameResource:
-        return AsyncNameResource(self._client)
-
-    @cached_property
     def with_raw_response(self) -> AsyncObjectivesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -276,8 +276,7 @@ class AsyncObjectivesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        context_id: Optional[str] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
+        name: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -299,13 +298,7 @@ class AsyncObjectivesResource(AsyncAPIResource):
         """
         return await self._post(
             "/objectives",
-            body=await async_maybe_transform(
-                {
-                    "context_id": context_id,
-                    "name": name,
-                },
-                objective_create_params.ObjectiveCreateParams,
-            ),
+            body=await async_maybe_transform({"name": name}, objective_create_params.ObjectiveCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -324,7 +317,7 @@ class AsyncObjectivesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> Objective:
         """
-        Get an objective by its unique ID.
+        Get an objective by its unique ID with channel data.
 
         Args:
           extra_headers: Send extra headers
@@ -348,6 +341,8 @@ class AsyncObjectivesResource(AsyncAPIResource):
     async def list(
         self,
         *,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        offset: Optional[int] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -355,11 +350,32 @@ class AsyncObjectivesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ObjectiveListResponse:
-        """List all objectives."""
+        """
+        List all objectives with channel data.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return await self._get(
             "/objectives",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "limit": limit,
+                        "offset": offset,
+                    },
+                    objective_list_params.ObjectiveListParams,
+                ),
             ),
             cast_to=ObjectiveListResponse,
         )
@@ -489,10 +505,6 @@ class ObjectivesResourceWithRawResponse:
             objectives.stream_events,
         )
 
-    @cached_property
-    def name(self) -> NameResourceWithRawResponse:
-        return NameResourceWithRawResponse(self._objectives.name)
-
 
 class AsyncObjectivesResourceWithRawResponse:
     def __init__(self, objectives: AsyncObjectivesResource) -> None:
@@ -516,10 +528,6 @@ class AsyncObjectivesResourceWithRawResponse:
         self.stream_events = async_to_raw_response_wrapper(
             objectives.stream_events,
         )
-
-    @cached_property
-    def name(self) -> AsyncNameResourceWithRawResponse:
-        return AsyncNameResourceWithRawResponse(self._objectives.name)
 
 
 class ObjectivesResourceWithStreamingResponse:
@@ -545,10 +553,6 @@ class ObjectivesResourceWithStreamingResponse:
             objectives.stream_events,
         )
 
-    @cached_property
-    def name(self) -> NameResourceWithStreamingResponse:
-        return NameResourceWithStreamingResponse(self._objectives.name)
-
 
 class AsyncObjectivesResourceWithStreamingResponse:
     def __init__(self, objectives: AsyncObjectivesResource) -> None:
@@ -572,7 +576,3 @@ class AsyncObjectivesResourceWithStreamingResponse:
         self.stream_events = async_to_streamed_response_wrapper(
             objectives.stream_events,
         )
-
-    @cached_property
-    def name(self) -> AsyncNameResourceWithStreamingResponse:
-        return AsyncNameResourceWithStreamingResponse(self._objectives.name)

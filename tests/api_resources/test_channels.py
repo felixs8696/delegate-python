@@ -250,7 +250,7 @@ class TestChannels:
     def test_method_join_with_all_params(self, client: Delegate) -> None:
         channel = client.channels.join(
             channel_id="channel_id",
-            role="role",
+            role="member",
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
@@ -337,48 +337,6 @@ class TestChannels:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
             client.channels.with_raw_response.leave(
                 channel_id="",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_retrieve_by_name(self, client: Delegate) -> None:
-        channel = client.channels.retrieve_by_name(
-            "channel_name",
-        )
-        assert_matches_type(Channel, channel, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_retrieve_by_name(self, client: Delegate) -> None:
-        response = client.channels.with_raw_response.retrieve_by_name(
-            "channel_name",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        channel = response.parse()
-        assert_matches_type(Channel, channel, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_retrieve_by_name(self, client: Delegate) -> None:
-        with client.channels.with_streaming_response.retrieve_by_name(
-            "channel_name",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            channel = response.parse()
-            assert_matches_type(Channel, channel, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_path_params_retrieve_by_name(self, client: Delegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_name` but received ''"):
-            client.channels.with_raw_response.retrieve_by_name(
-                "",
             )
 
 
@@ -616,7 +574,7 @@ class TestAsyncChannels:
     async def test_method_join_with_all_params(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.join(
             channel_id="channel_id",
-            role="role",
+            role="member",
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
@@ -703,46 +661,4 @@ class TestAsyncChannels:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
             await async_client.channels.with_raw_response.leave(
                 channel_id="",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_retrieve_by_name(self, async_client: AsyncDelegate) -> None:
-        channel = await async_client.channels.retrieve_by_name(
-            "channel_name",
-        )
-        assert_matches_type(Channel, channel, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_retrieve_by_name(self, async_client: AsyncDelegate) -> None:
-        response = await async_client.channels.with_raw_response.retrieve_by_name(
-            "channel_name",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        channel = await response.parse()
-        assert_matches_type(Channel, channel, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_retrieve_by_name(self, async_client: AsyncDelegate) -> None:
-        async with async_client.channels.with_streaming_response.retrieve_by_name(
-            "channel_name",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            channel = await response.parse()
-            assert_matches_type(Channel, channel, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_path_params_retrieve_by_name(self, async_client: AsyncDelegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_name` but received ''"):
-            await async_client.channels.with_raw_response.retrieve_by_name(
-                "",
             )

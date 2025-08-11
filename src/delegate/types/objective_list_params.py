@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import TypedDict
 
-__all__ = ["ActivityListParams"]
+__all__ = ["ObjectiveListParams"]
 
 
-class ActivityListParams(TypedDict, total=False):
-    objective_id: Required[str]
-
+class ObjectiveListParams(TypedDict, total=False):
     limit: Optional[int]
+
+    offset: Optional[int]
