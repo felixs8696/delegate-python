@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -286,7 +287,7 @@ class ChannelsResource(SyncAPIResource):
         self,
         channel_id: str,
         *,
-        role: str | NotGiven = NOT_GIVEN,
+        role: Literal["member", "admin", "owner"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -354,39 +355,6 @@ class ChannelsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ChannelMembership,
-        )
-
-    def retrieve_by_name(
-        self,
-        channel_name: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Channel:
-        """
-        Get a channel by its unique name.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not channel_name:
-            raise ValueError(f"Expected a non-empty value for `channel_name` but received {channel_name!r}")
-        return self._get(
-            f"/channels/name/{channel_name}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Channel,
         )
 
 
@@ -637,7 +605,7 @@ class AsyncChannelsResource(AsyncAPIResource):
         self,
         channel_id: str,
         *,
-        role: str | NotGiven = NOT_GIVEN,
+        role: Literal["member", "admin", "owner"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -707,39 +675,6 @@ class AsyncChannelsResource(AsyncAPIResource):
             cast_to=ChannelMembership,
         )
 
-    async def retrieve_by_name(
-        self,
-        channel_name: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Channel:
-        """
-        Get a channel by its unique name.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not channel_name:
-            raise ValueError(f"Expected a non-empty value for `channel_name` but received {channel_name!r}")
-        return await self._get(
-            f"/channels/name/{channel_name}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Channel,
-        )
-
 
 class ChannelsResourceWithRawResponse:
     def __init__(self, channels: ChannelsResource) -> None:
@@ -765,9 +700,6 @@ class ChannelsResourceWithRawResponse:
         )
         self.leave = to_raw_response_wrapper(
             channels.leave,
-        )
-        self.retrieve_by_name = to_raw_response_wrapper(
-            channels.retrieve_by_name,
         )
 
     @cached_property
@@ -800,9 +732,6 @@ class AsyncChannelsResourceWithRawResponse:
         self.leave = async_to_raw_response_wrapper(
             channels.leave,
         )
-        self.retrieve_by_name = async_to_raw_response_wrapper(
-            channels.retrieve_by_name,
-        )
 
     @cached_property
     def members(self) -> AsyncMembersResourceWithRawResponse:
@@ -834,9 +763,6 @@ class ChannelsResourceWithStreamingResponse:
         self.leave = to_streamed_response_wrapper(
             channels.leave,
         )
-        self.retrieve_by_name = to_streamed_response_wrapper(
-            channels.retrieve_by_name,
-        )
 
     @cached_property
     def members(self) -> MembersResourceWithStreamingResponse:
@@ -867,9 +793,6 @@ class AsyncChannelsResourceWithStreamingResponse:
         )
         self.leave = async_to_streamed_response_wrapper(
             channels.leave,
-        )
-        self.retrieve_by_name = async_to_streamed_response_wrapper(
-            channels.retrieve_by_name,
         )
 
     @cached_property

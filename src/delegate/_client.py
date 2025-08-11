@@ -30,7 +30,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import spans, users, events, states, contexts, activities
+from .resources import spans, users, events, states
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -41,7 +41,6 @@ from ._base_client import (
 )
 from .resources.channels import channels
 from .resources.objectives import objectives
-from .resources.channel_messages import channel_messages
 
 __all__ = [
     "ENVIRONMENTS",
@@ -63,14 +62,11 @@ ENVIRONMENTS: Dict[str, str] = {
 
 class Delegate(SyncAPIClient):
     objectives: objectives.ObjectivesResource
-    activities: activities.ActivitiesResource
     spans: spans.SpansResource
     states: states.StatesResource
     events: events.EventsResource
-    contexts: contexts.ContextsResource
     users: users.UsersResource
     channels: channels.ChannelsResource
-    channel_messages: channel_messages.ChannelMessagesResource
     with_raw_response: DelegateWithRawResponse
     with_streaming_response: DelegateWithStreamedResponse
 
@@ -149,14 +145,11 @@ class Delegate(SyncAPIClient):
         )
 
         self.objectives = objectives.ObjectivesResource(self)
-        self.activities = activities.ActivitiesResource(self)
         self.spans = spans.SpansResource(self)
         self.states = states.StatesResource(self)
         self.events = events.EventsResource(self)
-        self.contexts = contexts.ContextsResource(self)
         self.users = users.UsersResource(self)
         self.channels = channels.ChannelsResource(self)
-        self.channel_messages = channel_messages.ChannelMessagesResource(self)
         self.with_raw_response = DelegateWithRawResponse(self)
         self.with_streaming_response = DelegateWithStreamedResponse(self)
 
@@ -290,14 +283,11 @@ class Delegate(SyncAPIClient):
 
 class AsyncDelegate(AsyncAPIClient):
     objectives: objectives.AsyncObjectivesResource
-    activities: activities.AsyncActivitiesResource
     spans: spans.AsyncSpansResource
     states: states.AsyncStatesResource
     events: events.AsyncEventsResource
-    contexts: contexts.AsyncContextsResource
     users: users.AsyncUsersResource
     channels: channels.AsyncChannelsResource
-    channel_messages: channel_messages.AsyncChannelMessagesResource
     with_raw_response: AsyncDelegateWithRawResponse
     with_streaming_response: AsyncDelegateWithStreamedResponse
 
@@ -376,14 +366,11 @@ class AsyncDelegate(AsyncAPIClient):
         )
 
         self.objectives = objectives.AsyncObjectivesResource(self)
-        self.activities = activities.AsyncActivitiesResource(self)
         self.spans = spans.AsyncSpansResource(self)
         self.states = states.AsyncStatesResource(self)
         self.events = events.AsyncEventsResource(self)
-        self.contexts = contexts.AsyncContextsResource(self)
         self.users = users.AsyncUsersResource(self)
         self.channels = channels.AsyncChannelsResource(self)
-        self.channel_messages = channel_messages.AsyncChannelMessagesResource(self)
         self.with_raw_response = AsyncDelegateWithRawResponse(self)
         self.with_streaming_response = AsyncDelegateWithStreamedResponse(self)
 
@@ -518,14 +505,11 @@ class AsyncDelegate(AsyncAPIClient):
 class DelegateWithRawResponse:
     def __init__(self, client: Delegate) -> None:
         self.objectives = objectives.ObjectivesResourceWithRawResponse(client.objectives)
-        self.activities = activities.ActivitiesResourceWithRawResponse(client.activities)
         self.spans = spans.SpansResourceWithRawResponse(client.spans)
         self.states = states.StatesResourceWithRawResponse(client.states)
         self.events = events.EventsResourceWithRawResponse(client.events)
-        self.contexts = contexts.ContextsResourceWithRawResponse(client.contexts)
         self.users = users.UsersResourceWithRawResponse(client.users)
         self.channels = channels.ChannelsResourceWithRawResponse(client.channels)
-        self.channel_messages = channel_messages.ChannelMessagesResourceWithRawResponse(client.channel_messages)
 
         self.retrieve = to_raw_response_wrapper(
             client.retrieve,
@@ -535,14 +519,11 @@ class DelegateWithRawResponse:
 class AsyncDelegateWithRawResponse:
     def __init__(self, client: AsyncDelegate) -> None:
         self.objectives = objectives.AsyncObjectivesResourceWithRawResponse(client.objectives)
-        self.activities = activities.AsyncActivitiesResourceWithRawResponse(client.activities)
         self.spans = spans.AsyncSpansResourceWithRawResponse(client.spans)
         self.states = states.AsyncStatesResourceWithRawResponse(client.states)
         self.events = events.AsyncEventsResourceWithRawResponse(client.events)
-        self.contexts = contexts.AsyncContextsResourceWithRawResponse(client.contexts)
         self.users = users.AsyncUsersResourceWithRawResponse(client.users)
         self.channels = channels.AsyncChannelsResourceWithRawResponse(client.channels)
-        self.channel_messages = channel_messages.AsyncChannelMessagesResourceWithRawResponse(client.channel_messages)
 
         self.retrieve = async_to_raw_response_wrapper(
             client.retrieve,
@@ -552,14 +533,11 @@ class AsyncDelegateWithRawResponse:
 class DelegateWithStreamedResponse:
     def __init__(self, client: Delegate) -> None:
         self.objectives = objectives.ObjectivesResourceWithStreamingResponse(client.objectives)
-        self.activities = activities.ActivitiesResourceWithStreamingResponse(client.activities)
         self.spans = spans.SpansResourceWithStreamingResponse(client.spans)
         self.states = states.StatesResourceWithStreamingResponse(client.states)
         self.events = events.EventsResourceWithStreamingResponse(client.events)
-        self.contexts = contexts.ContextsResourceWithStreamingResponse(client.contexts)
         self.users = users.UsersResourceWithStreamingResponse(client.users)
         self.channels = channels.ChannelsResourceWithStreamingResponse(client.channels)
-        self.channel_messages = channel_messages.ChannelMessagesResourceWithStreamingResponse(client.channel_messages)
 
         self.retrieve = to_streamed_response_wrapper(
             client.retrieve,
@@ -569,16 +547,11 @@ class DelegateWithStreamedResponse:
 class AsyncDelegateWithStreamedResponse:
     def __init__(self, client: AsyncDelegate) -> None:
         self.objectives = objectives.AsyncObjectivesResourceWithStreamingResponse(client.objectives)
-        self.activities = activities.AsyncActivitiesResourceWithStreamingResponse(client.activities)
         self.spans = spans.AsyncSpansResourceWithStreamingResponse(client.spans)
         self.states = states.AsyncStatesResourceWithStreamingResponse(client.states)
         self.events = events.AsyncEventsResourceWithStreamingResponse(client.events)
-        self.contexts = contexts.AsyncContextsResourceWithStreamingResponse(client.contexts)
         self.users = users.AsyncUsersResourceWithStreamingResponse(client.users)
         self.channels = channels.AsyncChannelsResourceWithStreamingResponse(client.channels)
-        self.channel_messages = channel_messages.AsyncChannelMessagesResourceWithStreamingResponse(
-            client.channel_messages
-        )
 
         self.retrieve = async_to_streamed_response_wrapper(
             client.retrieve,

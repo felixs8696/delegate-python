@@ -27,5 +27,8 @@ class User(BaseModel):
     is_active: Optional[bool] = None
     """Whether the user is active"""
 
+    is_delegate: Optional[bool] = None
+    """Whether this user is a delegate service account"""
+
     updated_at: Optional[datetime] = None
     """The timestamp when the user was last updated"""

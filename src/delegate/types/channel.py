@@ -27,6 +27,9 @@ class Channel(BaseModel):
     is_group_chat: Optional[bool] = None
     """Whether this is a group chat"""
 
+    is_objective_channel: Optional[bool] = None
+    """Whether this channel is a special reserved channel for objectives"""
+
     is_private: Optional[bool] = None
     """Whether this channel is private"""
 

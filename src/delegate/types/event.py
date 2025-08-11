@@ -2,18 +2,19 @@
 
 from typing import Union, Optional
 from datetime import datetime
-from typing_extensions import TypeAlias
+from typing_extensions import Annotated, TypeAlias
 
+from .._utils import PropertyInfo
 from .._models import BaseModel
-from .data_content_entity import DataContentEntity
 from .text_content_entity import TextContentEntity
 from .tool_request_content_entity import ToolRequestContentEntity
 from .tool_response_content_entity import ToolResponseContentEntity
 
 __all__ = ["Event", "Content"]
 
-Content: TypeAlias = Union[
-    TextContentEntity, ToolRequestContentEntity, ToolResponseContentEntity, DataContentEntity, None
+Content: TypeAlias = Annotated[
+    Union[TextContentEntity, ToolRequestContentEntity, ToolResponseContentEntity, None],
+    PropertyInfo(discriminator="type"),
 ]
 
 
@@ -29,3 +30,6 @@ class Event(BaseModel):
 
     created_at: Optional[datetime] = None
     """The timestamp when the event was created"""
+
+    sequence_id: Optional[int] = None
+    """Auto-incrementing sequence ID for reliable ordering"""

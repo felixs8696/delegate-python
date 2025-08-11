@@ -24,7 +24,7 @@ class TestMembers:
         member = client.channels.members.update(
             user_id="user_id",
             channel_id="channel_id",
-            role="role",
+            role="member",
         )
         assert_matches_type(ChannelMembership, member, path=["response"])
 
@@ -34,7 +34,7 @@ class TestMembers:
         response = client.channels.members.with_raw_response.update(
             user_id="user_id",
             channel_id="channel_id",
-            role="role",
+            role="member",
         )
 
         assert response.is_closed is True
@@ -48,7 +48,7 @@ class TestMembers:
         with client.channels.members.with_streaming_response.update(
             user_id="user_id",
             channel_id="channel_id",
-            role="role",
+            role="member",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -65,14 +65,14 @@ class TestMembers:
             client.channels.members.with_raw_response.update(
                 user_id="user_id",
                 channel_id="",
-                role="role",
+                role="member",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
             client.channels.members.with_raw_response.update(
                 user_id="",
                 channel_id="channel_id",
-                role="role",
+                role="member",
             )
 
     @pytest.mark.skip()
@@ -138,7 +138,7 @@ class TestAsyncMembers:
         member = await async_client.channels.members.update(
             user_id="user_id",
             channel_id="channel_id",
-            role="role",
+            role="member",
         )
         assert_matches_type(ChannelMembership, member, path=["response"])
 
@@ -148,7 +148,7 @@ class TestAsyncMembers:
         response = await async_client.channels.members.with_raw_response.update(
             user_id="user_id",
             channel_id="channel_id",
-            role="role",
+            role="member",
         )
 
         assert response.is_closed is True
@@ -162,7 +162,7 @@ class TestAsyncMembers:
         async with async_client.channels.members.with_streaming_response.update(
             user_id="user_id",
             channel_id="channel_id",
-            role="role",
+            role="member",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -179,14 +179,14 @@ class TestAsyncMembers:
             await async_client.channels.members.with_raw_response.update(
                 user_id="user_id",
                 channel_id="",
-                role="role",
+                role="member",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
             await async_client.channels.members.with_raw_response.update(
                 user_id="",
                 channel_id="channel_id",
-                role="role",
+                role="member",
             )
 
     @pytest.mark.skip()
