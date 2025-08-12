@@ -10,14 +10,14 @@ from .._models import BaseModel
 __all__ = [
     "NotificationDeleteResponse",
     "Content",
-    "ContentScheduledActivityEntity",
-    "ContentCompletedActivityEntity",
-    "ContentApprovalRequestEntity",
-    "ContentInterventionRequestEntity",
+    "ContentScheduledActivity",
+    "ContentCompletedActivity",
+    "ContentApprovalRequest",
+    "ContentInterventionRequest",
 ]
 
 
-class ContentScheduledActivityEntity(BaseModel):
+class ContentScheduledActivity(BaseModel):
     description: str
     """The description of the notification"""
 
@@ -34,7 +34,7 @@ class ContentScheduledActivityEntity(BaseModel):
     """The type of notification"""
 
 
-class ContentCompletedActivityEntity(BaseModel):
+class ContentCompletedActivity(BaseModel):
     completed_at: datetime
     """The timestamp when the activity was completed"""
 
@@ -48,7 +48,7 @@ class ContentCompletedActivityEntity(BaseModel):
     """The type of notification"""
 
 
-class ContentApprovalRequestEntity(BaseModel):
+class ContentApprovalRequest(BaseModel):
     created_at: datetime
     """The timestamp when the notification was created"""
 
@@ -71,7 +71,7 @@ class ContentApprovalRequestEntity(BaseModel):
     """The type of notification"""
 
 
-class ContentInterventionRequestEntity(BaseModel):
+class ContentInterventionRequest(BaseModel):
     created_at: datetime
     """The timestamp when the notification was created"""
 
@@ -92,17 +92,15 @@ class ContentInterventionRequestEntity(BaseModel):
 
 
 Content: TypeAlias = Annotated[
-    Union[
-        ContentScheduledActivityEntity,
-        ContentCompletedActivityEntity,
-        ContentApprovalRequestEntity,
-        ContentInterventionRequestEntity,
-    ],
+    Union[ContentScheduledActivity, ContentCompletedActivity, ContentApprovalRequest, ContentInterventionRequest],
     PropertyInfo(discriminator="type"),
 ]
 
 
 class NotificationDeleteResponse(BaseModel):
+    id: str
+    """The notification's unique id"""
+
     content: Content
     """The content of the notification.
 
@@ -112,9 +110,6 @@ class NotificationDeleteResponse(BaseModel):
 
     objective_id: str
     """ID of the objective this notification belongs to"""
-
-    id: Optional[str] = None
-    """The notification's unique id"""
 
     created_at: Optional[datetime] = None
     """The timestamp when the notification was created"""

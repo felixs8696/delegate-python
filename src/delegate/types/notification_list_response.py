@@ -11,14 +11,14 @@ __all__ = [
     "NotificationListResponse",
     "NotificationListResponseItem",
     "NotificationListResponseItemContent",
-    "NotificationListResponseItemContentScheduledActivityEntity",
-    "NotificationListResponseItemContentCompletedActivityEntity",
-    "NotificationListResponseItemContentApprovalRequestEntity",
-    "NotificationListResponseItemContentInterventionRequestEntity",
+    "NotificationListResponseItemContentScheduledActivity",
+    "NotificationListResponseItemContentCompletedActivity",
+    "NotificationListResponseItemContentApprovalRequest",
+    "NotificationListResponseItemContentInterventionRequest",
 ]
 
 
-class NotificationListResponseItemContentScheduledActivityEntity(BaseModel):
+class NotificationListResponseItemContentScheduledActivity(BaseModel):
     description: str
     """The description of the notification"""
 
@@ -35,7 +35,7 @@ class NotificationListResponseItemContentScheduledActivityEntity(BaseModel):
     """The type of notification"""
 
 
-class NotificationListResponseItemContentCompletedActivityEntity(BaseModel):
+class NotificationListResponseItemContentCompletedActivity(BaseModel):
     completed_at: datetime
     """The timestamp when the activity was completed"""
 
@@ -49,7 +49,7 @@ class NotificationListResponseItemContentCompletedActivityEntity(BaseModel):
     """The type of notification"""
 
 
-class NotificationListResponseItemContentApprovalRequestEntity(BaseModel):
+class NotificationListResponseItemContentApprovalRequest(BaseModel):
     created_at: datetime
     """The timestamp when the notification was created"""
 
@@ -72,7 +72,7 @@ class NotificationListResponseItemContentApprovalRequestEntity(BaseModel):
     """The type of notification"""
 
 
-class NotificationListResponseItemContentInterventionRequestEntity(BaseModel):
+class NotificationListResponseItemContentInterventionRequest(BaseModel):
     created_at: datetime
     """The timestamp when the notification was created"""
 
@@ -94,16 +94,19 @@ class NotificationListResponseItemContentInterventionRequestEntity(BaseModel):
 
 NotificationListResponseItemContent: TypeAlias = Annotated[
     Union[
-        NotificationListResponseItemContentScheduledActivityEntity,
-        NotificationListResponseItemContentCompletedActivityEntity,
-        NotificationListResponseItemContentApprovalRequestEntity,
-        NotificationListResponseItemContentInterventionRequestEntity,
+        NotificationListResponseItemContentScheduledActivity,
+        NotificationListResponseItemContentCompletedActivity,
+        NotificationListResponseItemContentApprovalRequest,
+        NotificationListResponseItemContentInterventionRequest,
     ],
     PropertyInfo(discriminator="type"),
 ]
 
 
 class NotificationListResponseItem(BaseModel):
+    id: str
+    """The notification's unique id"""
+
     content: NotificationListResponseItemContent
     """The content of the notification.
 
@@ -113,9 +116,6 @@ class NotificationListResponseItem(BaseModel):
 
     objective_id: str
     """ID of the objective this notification belongs to"""
-
-    id: Optional[str] = None
-    """The notification's unique id"""
 
     created_at: Optional[datetime] = None
     """The timestamp when the notification was created"""

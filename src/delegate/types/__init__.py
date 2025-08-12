@@ -9,6 +9,7 @@ from .state import State as State
 from .channel import Channel as Channel
 from .message import Message as Message
 from .objective import Objective as Objective
+from .text_content import TextContent as TextContent
 from .span_list_params import SpanListParams as SpanListParams
 from .user_list_params import UserListParams as UserListParams
 from .event_list_params import EventListParams as EventListParams
@@ -29,6 +30,7 @@ from .state_create_params import StateCreateParams as StateCreateParams
 from .state_list_response import StateListResponse as StateListResponse
 from .state_update_params import StateUpdateParams as StateUpdateParams
 from .channel_leave_params import ChannelLeaveParams as ChannelLeaveParams
+from .tool_request_content import ToolRequestContent as ToolRequestContent
 from .channel_create_params import ChannelCreateParams as ChannelCreateParams
 from .channel_list_response import ChannelListResponse as ChannelListResponse
 from .channel_update_params import ChannelUpdateParams as ChannelUpdateParams
@@ -36,6 +38,7 @@ from .message_create_params import MessageCreateParams as MessageCreateParams
 from .message_list_response import MessageListResponse as MessageListResponse
 from .message_update_params import MessageUpdateParams as MessageUpdateParams
 from .objective_list_params import ObjectiveListParams as ObjectiveListParams
+from .tool_response_content import ToolResponseContent as ToolResponseContent
 from .objective_cancel_params import ObjectiveCancelParams as ObjectiveCancelParams
 from .objective_create_params import ObjectiveCreateParams as ObjectiveCreateParams
 from .objective_list_response import ObjectiveListResponse as ObjectiveListResponse
@@ -43,6 +46,8 @@ from .notification_list_params import NotificationListParams as NotificationList
 from .notification_create_params import NotificationCreateParams as NotificationCreateParams
 from .notification_list_response import NotificationListResponse as NotificationListResponse
 from .notification_update_params import NotificationUpdateParams as NotificationUpdateParams
+from .tool_request_content_param import ToolRequestContentParam as ToolRequestContentParam
+from .tool_response_content_param import ToolResponseContentParam as ToolResponseContentParam
 from .notification_create_response import NotificationCreateResponse as NotificationCreateResponse
 from .notification_delete_response import NotificationDeleteResponse as NotificationDeleteResponse
 from .notification_update_response import NotificationUpdateResponse as NotificationUpdateResponse
