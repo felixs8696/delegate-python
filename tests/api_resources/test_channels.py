@@ -21,13 +21,13 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestChannels:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: Delegate) -> None:
         channel = client.channels.create()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: Delegate) -> None:
         channel = client.channels.create(
@@ -39,7 +39,7 @@ class TestChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Delegate) -> None:
         response = client.channels.with_raw_response.create()
@@ -49,7 +49,7 @@ class TestChannels:
         channel = response.parse()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Delegate) -> None:
         with client.channels.with_streaming_response.create() as response:
@@ -61,7 +61,7 @@ class TestChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Delegate) -> None:
         channel = client.channels.retrieve(
@@ -69,7 +69,7 @@ class TestChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Delegate) -> None:
         response = client.channels.with_raw_response.retrieve(
@@ -81,7 +81,7 @@ class TestChannels:
         channel = response.parse()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Delegate) -> None:
         with client.channels.with_streaming_response.retrieve(
@@ -95,7 +95,7 @@ class TestChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -103,7 +103,7 @@ class TestChannels:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update(self, client: Delegate) -> None:
         channel = client.channels.update(
@@ -111,7 +111,7 @@ class TestChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Delegate) -> None:
         channel = client.channels.update(
@@ -123,7 +123,7 @@ class TestChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Delegate) -> None:
         response = client.channels.with_raw_response.update(
@@ -135,7 +135,7 @@ class TestChannels:
         channel = response.parse()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Delegate) -> None:
         with client.channels.with_streaming_response.update(
@@ -149,7 +149,7 @@ class TestChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_update(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -157,13 +157,13 @@ class TestChannels:
                 channel_id="",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list(self, client: Delegate) -> None:
         channel = client.channels.list()
         assert_matches_type(ChannelListResponse, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Delegate) -> None:
         channel = client.channels.list(
@@ -173,7 +173,7 @@ class TestChannels:
         )
         assert_matches_type(ChannelListResponse, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Delegate) -> None:
         response = client.channels.with_raw_response.list()
@@ -183,7 +183,7 @@ class TestChannels:
         channel = response.parse()
         assert_matches_type(ChannelListResponse, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Delegate) -> None:
         with client.channels.with_streaming_response.list() as response:
@@ -195,7 +195,7 @@ class TestChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: Delegate) -> None:
         channel = client.channels.delete(
@@ -203,7 +203,7 @@ class TestChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Delegate) -> None:
         response = client.channels.with_raw_response.delete(
@@ -215,7 +215,7 @@ class TestChannels:
         channel = response.parse()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Delegate) -> None:
         with client.channels.with_streaming_response.delete(
@@ -229,7 +229,7 @@ class TestChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -237,7 +237,7 @@ class TestChannels:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_join(self, client: Delegate) -> None:
         channel = client.channels.join(
@@ -245,7 +245,7 @@ class TestChannels:
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_join_with_all_params(self, client: Delegate) -> None:
         channel = client.channels.join(
@@ -254,7 +254,7 @@ class TestChannels:
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_join(self, client: Delegate) -> None:
         response = client.channels.with_raw_response.join(
@@ -266,7 +266,7 @@ class TestChannels:
         channel = response.parse()
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_join(self, client: Delegate) -> None:
         with client.channels.with_streaming_response.join(
@@ -280,7 +280,7 @@ class TestChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_join(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -288,7 +288,7 @@ class TestChannels:
                 channel_id="",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_leave(self, client: Delegate) -> None:
         channel = client.channels.leave(
@@ -296,7 +296,7 @@ class TestChannels:
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_leave_with_all_params(self, client: Delegate) -> None:
         channel = client.channels.leave(
@@ -305,7 +305,7 @@ class TestChannels:
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_leave(self, client: Delegate) -> None:
         response = client.channels.with_raw_response.leave(
@@ -317,7 +317,7 @@ class TestChannels:
         channel = response.parse()
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_leave(self, client: Delegate) -> None:
         with client.channels.with_streaming_response.leave(
@@ -331,7 +331,7 @@ class TestChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_leave(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -345,13 +345,13 @@ class TestAsyncChannels:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.create()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.create(
@@ -363,7 +363,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncDelegate) -> None:
         response = await async_client.channels.with_raw_response.create()
@@ -373,7 +373,7 @@ class TestAsyncChannels:
         channel = await response.parse()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncDelegate) -> None:
         async with async_client.channels.with_streaming_response.create() as response:
@@ -385,7 +385,7 @@ class TestAsyncChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.retrieve(
@@ -393,7 +393,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDelegate) -> None:
         response = await async_client.channels.with_raw_response.retrieve(
@@ -405,7 +405,7 @@ class TestAsyncChannels:
         channel = await response.parse()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDelegate) -> None:
         async with async_client.channels.with_streaming_response.retrieve(
@@ -419,7 +419,7 @@ class TestAsyncChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -427,7 +427,7 @@ class TestAsyncChannels:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.update(
@@ -435,7 +435,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.update(
@@ -447,7 +447,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncDelegate) -> None:
         response = await async_client.channels.with_raw_response.update(
@@ -459,7 +459,7 @@ class TestAsyncChannels:
         channel = await response.parse()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncDelegate) -> None:
         async with async_client.channels.with_streaming_response.update(
@@ -473,7 +473,7 @@ class TestAsyncChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -481,13 +481,13 @@ class TestAsyncChannels:
                 channel_id="",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.list()
         assert_matches_type(ChannelListResponse, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.list(
@@ -497,7 +497,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(ChannelListResponse, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncDelegate) -> None:
         response = await async_client.channels.with_raw_response.list()
@@ -507,7 +507,7 @@ class TestAsyncChannels:
         channel = await response.parse()
         assert_matches_type(ChannelListResponse, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncDelegate) -> None:
         async with async_client.channels.with_streaming_response.list() as response:
@@ -519,7 +519,7 @@ class TestAsyncChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.delete(
@@ -527,7 +527,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncDelegate) -> None:
         response = await async_client.channels.with_raw_response.delete(
@@ -539,7 +539,7 @@ class TestAsyncChannels:
         channel = await response.parse()
         assert_matches_type(Channel, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncDelegate) -> None:
         async with async_client.channels.with_streaming_response.delete(
@@ -553,7 +553,7 @@ class TestAsyncChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -561,7 +561,7 @@ class TestAsyncChannels:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_join(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.join(
@@ -569,7 +569,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_join_with_all_params(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.join(
@@ -578,7 +578,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_join(self, async_client: AsyncDelegate) -> None:
         response = await async_client.channels.with_raw_response.join(
@@ -590,7 +590,7 @@ class TestAsyncChannels:
         channel = await response.parse()
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_join(self, async_client: AsyncDelegate) -> None:
         async with async_client.channels.with_streaming_response.join(
@@ -604,7 +604,7 @@ class TestAsyncChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_join(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
@@ -612,7 +612,7 @@ class TestAsyncChannels:
                 channel_id="",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_leave(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.leave(
@@ -620,7 +620,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_leave_with_all_params(self, async_client: AsyncDelegate) -> None:
         channel = await async_client.channels.leave(
@@ -629,7 +629,7 @@ class TestAsyncChannels:
         )
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_leave(self, async_client: AsyncDelegate) -> None:
         response = await async_client.channels.with_raw_response.leave(
@@ -641,7 +641,7 @@ class TestAsyncChannels:
         channel = await response.parse()
         assert_matches_type(ChannelMembership, channel, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_leave(self, async_client: AsyncDelegate) -> None:
         async with async_client.channels.with_streaming_response.leave(
@@ -655,7 +655,7 @@ class TestAsyncChannels:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_leave(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `channel_id` but received ''"):
