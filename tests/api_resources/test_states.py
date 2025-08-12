@@ -17,7 +17,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestStates:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: Delegate) -> None:
         state = client.states.create(
@@ -26,7 +26,7 @@ class TestStates:
         )
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Delegate) -> None:
         response = client.states.with_raw_response.create(
@@ -39,7 +39,7 @@ class TestStates:
         state = response.parse()
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Delegate) -> None:
         with client.states.with_streaming_response.create(
@@ -54,7 +54,7 @@ class TestStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Delegate) -> None:
         state = client.states.retrieve(
@@ -62,7 +62,7 @@ class TestStates:
         )
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Delegate) -> None:
         response = client.states.with_raw_response.retrieve(
@@ -74,7 +74,7 @@ class TestStates:
         state = response.parse()
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Delegate) -> None:
         with client.states.with_streaming_response.retrieve(
@@ -88,7 +88,7 @@ class TestStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `state_id` but received ''"):
@@ -96,7 +96,7 @@ class TestStates:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update(self, client: Delegate) -> None:
         state = client.states.update(
@@ -106,7 +106,7 @@ class TestStates:
         )
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Delegate) -> None:
         response = client.states.with_raw_response.update(
@@ -120,7 +120,7 @@ class TestStates:
         state = response.parse()
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Delegate) -> None:
         with client.states.with_streaming_response.update(
@@ -136,7 +136,7 @@ class TestStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_update(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `state_id` but received ''"):
@@ -146,13 +146,13 @@ class TestStates:
                 state={"foo": "bar"},
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list(self, client: Delegate) -> None:
         state = client.states.list()
         assert_matches_type(StateListResponse, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Delegate) -> None:
         state = client.states.list(
@@ -160,7 +160,7 @@ class TestStates:
         )
         assert_matches_type(StateListResponse, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Delegate) -> None:
         response = client.states.with_raw_response.list()
@@ -170,7 +170,7 @@ class TestStates:
         state = response.parse()
         assert_matches_type(StateListResponse, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Delegate) -> None:
         with client.states.with_streaming_response.list() as response:
@@ -182,7 +182,7 @@ class TestStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: Delegate) -> None:
         state = client.states.delete(
@@ -190,7 +190,7 @@ class TestStates:
         )
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Delegate) -> None:
         response = client.states.with_raw_response.delete(
@@ -202,7 +202,7 @@ class TestStates:
         state = response.parse()
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Delegate) -> None:
         with client.states.with_streaming_response.delete(
@@ -216,7 +216,7 @@ class TestStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `state_id` but received ''"):
@@ -230,7 +230,7 @@ class TestAsyncStates:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncDelegate) -> None:
         state = await async_client.states.create(
@@ -239,7 +239,7 @@ class TestAsyncStates:
         )
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncDelegate) -> None:
         response = await async_client.states.with_raw_response.create(
@@ -252,7 +252,7 @@ class TestAsyncStates:
         state = await response.parse()
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncDelegate) -> None:
         async with async_client.states.with_streaming_response.create(
@@ -267,7 +267,7 @@ class TestAsyncStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDelegate) -> None:
         state = await async_client.states.retrieve(
@@ -275,7 +275,7 @@ class TestAsyncStates:
         )
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDelegate) -> None:
         response = await async_client.states.with_raw_response.retrieve(
@@ -287,7 +287,7 @@ class TestAsyncStates:
         state = await response.parse()
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDelegate) -> None:
         async with async_client.states.with_streaming_response.retrieve(
@@ -301,7 +301,7 @@ class TestAsyncStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `state_id` but received ''"):
@@ -309,7 +309,7 @@ class TestAsyncStates:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncDelegate) -> None:
         state = await async_client.states.update(
@@ -319,7 +319,7 @@ class TestAsyncStates:
         )
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncDelegate) -> None:
         response = await async_client.states.with_raw_response.update(
@@ -333,7 +333,7 @@ class TestAsyncStates:
         state = await response.parse()
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncDelegate) -> None:
         async with async_client.states.with_streaming_response.update(
@@ -349,7 +349,7 @@ class TestAsyncStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `state_id` but received ''"):
@@ -359,13 +359,13 @@ class TestAsyncStates:
                 state={"foo": "bar"},
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncDelegate) -> None:
         state = await async_client.states.list()
         assert_matches_type(StateListResponse, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncDelegate) -> None:
         state = await async_client.states.list(
@@ -373,7 +373,7 @@ class TestAsyncStates:
         )
         assert_matches_type(StateListResponse, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncDelegate) -> None:
         response = await async_client.states.with_raw_response.list()
@@ -383,7 +383,7 @@ class TestAsyncStates:
         state = await response.parse()
         assert_matches_type(StateListResponse, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncDelegate) -> None:
         async with async_client.states.with_streaming_response.list() as response:
@@ -395,7 +395,7 @@ class TestAsyncStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncDelegate) -> None:
         state = await async_client.states.delete(
@@ -403,7 +403,7 @@ class TestAsyncStates:
         )
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncDelegate) -> None:
         response = await async_client.states.with_raw_response.delete(
@@ -415,7 +415,7 @@ class TestAsyncStates:
         state = await response.parse()
         assert_matches_type(State, state, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncDelegate) -> None:
         async with async_client.states.with_streaming_response.delete(
@@ -429,7 +429,7 @@ class TestAsyncStates:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `state_id` but received ''"):

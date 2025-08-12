@@ -18,7 +18,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestSpans:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: Delegate) -> None:
         span = client.spans.create(
@@ -28,7 +28,7 @@ class TestSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: Delegate) -> None:
         span = client.spans.create(
@@ -45,7 +45,7 @@ class TestSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Delegate) -> None:
         response = client.spans.with_raw_response.create(
@@ -59,7 +59,7 @@ class TestSpans:
         span = response.parse()
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Delegate) -> None:
         with client.spans.with_streaming_response.create(
@@ -75,7 +75,7 @@ class TestSpans:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Delegate) -> None:
         span = client.spans.retrieve(
@@ -83,7 +83,7 @@ class TestSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Delegate) -> None:
         response = client.spans.with_raw_response.retrieve(
@@ -95,7 +95,7 @@ class TestSpans:
         span = response.parse()
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Delegate) -> None:
         with client.spans.with_streaming_response.retrieve(
@@ -109,7 +109,7 @@ class TestSpans:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `span_id` but received ''"):
@@ -117,7 +117,7 @@ class TestSpans:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update(self, client: Delegate) -> None:
         span = client.spans.update(
@@ -125,7 +125,7 @@ class TestSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Delegate) -> None:
         span = client.spans.update(
@@ -142,7 +142,7 @@ class TestSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Delegate) -> None:
         response = client.spans.with_raw_response.update(
@@ -154,7 +154,7 @@ class TestSpans:
         span = response.parse()
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Delegate) -> None:
         with client.spans.with_streaming_response.update(
@@ -168,7 +168,7 @@ class TestSpans:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_update(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `span_id` but received ''"):
@@ -176,13 +176,13 @@ class TestSpans:
                 span_id="",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list(self, client: Delegate) -> None:
         span = client.spans.list()
         assert_matches_type(SpanListResponse, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Delegate) -> None:
         span = client.spans.list(
@@ -190,7 +190,7 @@ class TestSpans:
         )
         assert_matches_type(SpanListResponse, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Delegate) -> None:
         response = client.spans.with_raw_response.list()
@@ -200,7 +200,7 @@ class TestSpans:
         span = response.parse()
         assert_matches_type(SpanListResponse, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Delegate) -> None:
         with client.spans.with_streaming_response.list() as response:
@@ -218,7 +218,7 @@ class TestAsyncSpans:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncDelegate) -> None:
         span = await async_client.spans.create(
@@ -228,7 +228,7 @@ class TestAsyncSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncDelegate) -> None:
         span = await async_client.spans.create(
@@ -245,7 +245,7 @@ class TestAsyncSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncDelegate) -> None:
         response = await async_client.spans.with_raw_response.create(
@@ -259,7 +259,7 @@ class TestAsyncSpans:
         span = await response.parse()
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncDelegate) -> None:
         async with async_client.spans.with_streaming_response.create(
@@ -275,7 +275,7 @@ class TestAsyncSpans:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDelegate) -> None:
         span = await async_client.spans.retrieve(
@@ -283,7 +283,7 @@ class TestAsyncSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDelegate) -> None:
         response = await async_client.spans.with_raw_response.retrieve(
@@ -295,7 +295,7 @@ class TestAsyncSpans:
         span = await response.parse()
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDelegate) -> None:
         async with async_client.spans.with_streaming_response.retrieve(
@@ -309,7 +309,7 @@ class TestAsyncSpans:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `span_id` but received ''"):
@@ -317,7 +317,7 @@ class TestAsyncSpans:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncDelegate) -> None:
         span = await async_client.spans.update(
@@ -325,7 +325,7 @@ class TestAsyncSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncDelegate) -> None:
         span = await async_client.spans.update(
@@ -342,7 +342,7 @@ class TestAsyncSpans:
         )
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncDelegate) -> None:
         response = await async_client.spans.with_raw_response.update(
@@ -354,7 +354,7 @@ class TestAsyncSpans:
         span = await response.parse()
         assert_matches_type(Span, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncDelegate) -> None:
         async with async_client.spans.with_streaming_response.update(
@@ -368,7 +368,7 @@ class TestAsyncSpans:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `span_id` but received ''"):
@@ -376,13 +376,13 @@ class TestAsyncSpans:
                 span_id="",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncDelegate) -> None:
         span = await async_client.spans.list()
         assert_matches_type(SpanListResponse, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncDelegate) -> None:
         span = await async_client.spans.list(
@@ -390,7 +390,7 @@ class TestAsyncSpans:
         )
         assert_matches_type(SpanListResponse, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncDelegate) -> None:
         response = await async_client.spans.with_raw_response.list()
@@ -400,7 +400,7 @@ class TestAsyncSpans:
         span = await response.parse()
         assert_matches_type(SpanListResponse, span, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncDelegate) -> None:
         async with async_client.spans.with_streaming_response.list() as response:

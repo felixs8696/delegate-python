@@ -24,7 +24,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestNotifications:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: Delegate) -> None:
         notification = client.notifications.create(
@@ -38,7 +38,7 @@ class TestNotifications:
         )
         assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: Delegate) -> None:
         notification = client.notifications.create(
@@ -53,7 +53,7 @@ class TestNotifications:
         )
         assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Delegate) -> None:
         response = client.notifications.with_raw_response.create(
@@ -71,7 +71,7 @@ class TestNotifications:
         notification = response.parse()
         assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Delegate) -> None:
         with client.notifications.with_streaming_response.create(
@@ -91,7 +91,7 @@ class TestNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Delegate) -> None:
         notification = client.notifications.retrieve(
@@ -99,7 +99,7 @@ class TestNotifications:
         )
         assert_matches_type(NotificationRetrieveResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Delegate) -> None:
         response = client.notifications.with_raw_response.retrieve(
@@ -111,7 +111,7 @@ class TestNotifications:
         notification = response.parse()
         assert_matches_type(NotificationRetrieveResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Delegate) -> None:
         with client.notifications.with_streaming_response.retrieve(
@@ -125,7 +125,7 @@ class TestNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `notification_id` but received ''"):
@@ -133,7 +133,7 @@ class TestNotifications:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update(self, client: Delegate) -> None:
         notification = client.notifications.update(
@@ -147,7 +147,7 @@ class TestNotifications:
         )
         assert_matches_type(NotificationUpdateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Delegate) -> None:
         notification = client.notifications.update(
@@ -162,7 +162,7 @@ class TestNotifications:
         )
         assert_matches_type(NotificationUpdateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Delegate) -> None:
         response = client.notifications.with_raw_response.update(
@@ -180,7 +180,7 @@ class TestNotifications:
         notification = response.parse()
         assert_matches_type(NotificationUpdateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Delegate) -> None:
         with client.notifications.with_streaming_response.update(
@@ -200,7 +200,7 @@ class TestNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_update(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `notification_id` but received ''"):
@@ -214,7 +214,7 @@ class TestNotifications:
                 },
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list(self, client: Delegate) -> None:
         notification = client.notifications.list(
@@ -222,7 +222,7 @@ class TestNotifications:
         )
         assert_matches_type(NotificationListResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Delegate) -> None:
         notification = client.notifications.list(
@@ -231,7 +231,7 @@ class TestNotifications:
         )
         assert_matches_type(NotificationListResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Delegate) -> None:
         response = client.notifications.with_raw_response.list(
@@ -243,7 +243,7 @@ class TestNotifications:
         notification = response.parse()
         assert_matches_type(NotificationListResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Delegate) -> None:
         with client.notifications.with_streaming_response.list(
@@ -257,7 +257,7 @@ class TestNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: Delegate) -> None:
         notification = client.notifications.delete(
@@ -265,7 +265,7 @@ class TestNotifications:
         )
         assert_matches_type(NotificationDeleteResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Delegate) -> None:
         response = client.notifications.with_raw_response.delete(
@@ -277,7 +277,7 @@ class TestNotifications:
         notification = response.parse()
         assert_matches_type(NotificationDeleteResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Delegate) -> None:
         with client.notifications.with_streaming_response.delete(
@@ -291,7 +291,7 @@ class TestNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: Delegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `notification_id` but received ''"):
@@ -305,7 +305,7 @@ class TestAsyncNotifications:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncDelegate) -> None:
         notification = await async_client.notifications.create(
@@ -319,7 +319,7 @@ class TestAsyncNotifications:
         )
         assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncDelegate) -> None:
         notification = await async_client.notifications.create(
@@ -334,7 +334,7 @@ class TestAsyncNotifications:
         )
         assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncDelegate) -> None:
         response = await async_client.notifications.with_raw_response.create(
@@ -352,7 +352,7 @@ class TestAsyncNotifications:
         notification = await response.parse()
         assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncDelegate) -> None:
         async with async_client.notifications.with_streaming_response.create(
@@ -372,7 +372,7 @@ class TestAsyncNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDelegate) -> None:
         notification = await async_client.notifications.retrieve(
@@ -380,7 +380,7 @@ class TestAsyncNotifications:
         )
         assert_matches_type(NotificationRetrieveResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDelegate) -> None:
         response = await async_client.notifications.with_raw_response.retrieve(
@@ -392,7 +392,7 @@ class TestAsyncNotifications:
         notification = await response.parse()
         assert_matches_type(NotificationRetrieveResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDelegate) -> None:
         async with async_client.notifications.with_streaming_response.retrieve(
@@ -406,7 +406,7 @@ class TestAsyncNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `notification_id` but received ''"):
@@ -414,7 +414,7 @@ class TestAsyncNotifications:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncDelegate) -> None:
         notification = await async_client.notifications.update(
@@ -428,7 +428,7 @@ class TestAsyncNotifications:
         )
         assert_matches_type(NotificationUpdateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncDelegate) -> None:
         notification = await async_client.notifications.update(
@@ -443,7 +443,7 @@ class TestAsyncNotifications:
         )
         assert_matches_type(NotificationUpdateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncDelegate) -> None:
         response = await async_client.notifications.with_raw_response.update(
@@ -461,7 +461,7 @@ class TestAsyncNotifications:
         notification = await response.parse()
         assert_matches_type(NotificationUpdateResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncDelegate) -> None:
         async with async_client.notifications.with_streaming_response.update(
@@ -481,7 +481,7 @@ class TestAsyncNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `notification_id` but received ''"):
@@ -495,7 +495,7 @@ class TestAsyncNotifications:
                 },
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncDelegate) -> None:
         notification = await async_client.notifications.list(
@@ -503,7 +503,7 @@ class TestAsyncNotifications:
         )
         assert_matches_type(NotificationListResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncDelegate) -> None:
         notification = await async_client.notifications.list(
@@ -512,7 +512,7 @@ class TestAsyncNotifications:
         )
         assert_matches_type(NotificationListResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncDelegate) -> None:
         response = await async_client.notifications.with_raw_response.list(
@@ -524,7 +524,7 @@ class TestAsyncNotifications:
         notification = await response.parse()
         assert_matches_type(NotificationListResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncDelegate) -> None:
         async with async_client.notifications.with_streaming_response.list(
@@ -538,7 +538,7 @@ class TestAsyncNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncDelegate) -> None:
         notification = await async_client.notifications.delete(
@@ -546,7 +546,7 @@ class TestAsyncNotifications:
         )
         assert_matches_type(NotificationDeleteResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncDelegate) -> None:
         response = await async_client.notifications.with_raw_response.delete(
@@ -558,7 +558,7 @@ class TestAsyncNotifications:
         notification = await response.parse()
         assert_matches_type(NotificationDeleteResponse, notification, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncDelegate) -> None:
         async with async_client.notifications.with_streaming_response.delete(
@@ -572,7 +572,7 @@ class TestAsyncNotifications:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncDelegate) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `notification_id` but received ''"):
