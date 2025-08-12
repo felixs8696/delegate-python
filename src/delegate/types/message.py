@@ -8,7 +8,7 @@ from .._utils import PropertyInfo
 from .._models import BaseModel
 
 __all__ = [
-    "Event",
+    "Message",
     "Content",
     "ContentTextContentEntity",
     "ContentToolRequestContentEntity",
@@ -71,23 +71,38 @@ class ContentToolResponseContentEntity(BaseModel):
 
 
 Content: TypeAlias = Annotated[
-    Union[ContentTextContentEntity, ContentToolRequestContentEntity, ContentToolResponseContentEntity, None],
+    Union[ContentTextContentEntity, ContentToolRequestContentEntity, ContentToolResponseContentEntity],
     PropertyInfo(discriminator="type"),
 ]
 
 
-class Event(BaseModel):
-    objective_id: str
-    """ID of the objective this event belongs to"""
+class Message(BaseModel):
+    author_id: str
+    """The user who sent the message"""
+
+    channel_id: str
+    """The channel this message belongs to"""
+
+    content: Content
+    """The message content"""
 
     id: Optional[str] = None
-    """The event's unique id"""
-
-    content: Optional[Content] = None
-    """Event payload content, matching activity content schema"""
+    """The message's unique id"""
 
     created_at: Optional[datetime] = None
-    """The timestamp when the event was created"""
+    """The timestamp when the message was created"""
 
-    sequence_id: Optional[int] = None
-    """Auto-incrementing sequence ID for reliable ordering"""
+    is_deleted: Optional[bool] = None
+    """Whether the message has been deleted"""
+
+    message_metadata: Optional[Dict[str, object]] = None
+    """Additional metadata for the message (reactions, files, etc.)"""
+
+    parent_message_id: Optional[str] = None
+    """The parent message id if this is a reply"""
+
+    streaming_status: Optional[Literal["pending", "streaming", "completed", "failed"]] = None
+    """Status of message streaming"""
+
+    updated_at: Optional[datetime] = None
+    """The timestamp when the message was last updated"""
