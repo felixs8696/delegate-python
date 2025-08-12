@@ -2,97 +2,19 @@
 
 from typing import Union, Optional
 from datetime import datetime
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .approval_request import ApprovalRequest
+from .completed_activity import CompletedActivity
+from .scheduled_activity import ScheduledActivity
+from .intervention_request import InterventionRequest
 
-__all__ = [
-    "NotificationDeleteResponse",
-    "Content",
-    "ContentScheduledActivity",
-    "ContentCompletedActivity",
-    "ContentApprovalRequest",
-    "ContentInterventionRequest",
-]
-
-
-class ContentScheduledActivity(BaseModel):
-    description: str
-    """The description of the notification"""
-
-    scheduled_at: datetime
-    """The timestamp when the scheduled activity will be sent"""
-
-    title: str
-    """The title of the notification"""
-
-    executed_at: Optional[datetime] = None
-    """The timestamp when the scheduled activity was executed"""
-
-    type: Optional[Literal["scheduled_activity"]] = None
-    """The type of notification"""
-
-
-class ContentCompletedActivity(BaseModel):
-    completed_at: datetime
-    """The timestamp when the activity was completed"""
-
-    description: str
-    """The description of the notification"""
-
-    title: str
-    """The title of the notification"""
-
-    type: Optional[Literal["completed_activity"]] = None
-    """The type of notification"""
-
-
-class ContentApprovalRequest(BaseModel):
-    created_at: datetime
-    """The timestamp when the notification was created"""
-
-    description: str
-    """The description of the notification"""
-
-    title: str
-    """The title of the notification"""
-
-    addressed: Optional[bool] = None
-    """Whether the approval request has been addressed"""
-
-    addressed_at: Optional[datetime] = None
-    """The timestamp when the approval request was addressed"""
-
-    approved: Optional[bool] = None
-    """Whether the approval request has been approved"""
-
-    type: Optional[Literal["approval_request"]] = None
-    """The type of notification"""
-
-
-class ContentInterventionRequest(BaseModel):
-    created_at: datetime
-    """The timestamp when the notification was created"""
-
-    description: str
-    """The description of the notification"""
-
-    title: str
-    """The title of the notification"""
-
-    addressed: Optional[bool] = None
-    """Whether the intervention request has been addressed"""
-
-    addressed_at: Optional[datetime] = None
-    """The timestamp when the intervention request was addressed"""
-
-    type: Optional[Literal["intervention_request"]] = None
-    """The type of notification"""
-
+__all__ = ["NotificationDeleteResponse", "Content"]
 
 Content: TypeAlias = Annotated[
-    Union[ContentScheduledActivity, ContentCompletedActivity, ContentApprovalRequest, ContentInterventionRequest],
+    Union[ScheduledActivity, CompletedActivity, ApprovalRequest, InterventionRequest],
     PropertyInfo(discriminator="type"),
 ]
 

@@ -142,6 +142,10 @@ Types:
 
 ```python
 from delegate.types import (
+    ApprovalRequest,
+    CompletedActivity,
+    InterventionRequest,
+    ScheduledActivity,
     NotificationCreateResponse,
     NotificationRetrieveResponse,
     NotificationUpdateResponse,
