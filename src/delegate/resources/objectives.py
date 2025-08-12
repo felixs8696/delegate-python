@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from ..types import user_list_params, user_update_params
+from ..types import objective_list_params, objective_cancel_params, objective_create_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -17,36 +17,68 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..types.user import User
 from .._base_client import make_request_options
-from ..types.user_list_response import UserListResponse
+from ..types.objective import Objective
+from ..types.objective_list_response import ObjectiveListResponse
 
-__all__ = ["UsersResource", "AsyncUsersResource"]
+__all__ = ["ObjectivesResource", "AsyncObjectivesResource"]
 
 
-class UsersResource(SyncAPIResource):
+class ObjectivesResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> UsersResourceWithRawResponse:
+    def with_raw_response(self) -> ObjectivesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/felixs8696/delegate-python#accessing-raw-response-data-eg-headers
         """
-        return UsersResourceWithRawResponse(self)
+        return ObjectivesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> UsersResourceWithStreamingResponse:
+    def with_streaming_response(self) -> ObjectivesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/felixs8696/delegate-python#with_streaming_response
         """
-        return UsersResourceWithStreamingResponse(self)
+        return ObjectivesResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        *,
+        name: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Objective:
+        """
+        Create a new objective with parameters.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/objectives",
+            body=maybe_transform({"name": name}, objective_create_params.ObjectiveCreateParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Objective,
+        )
 
     def retrieve(
         self,
-        user_id: str,
+        objective_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -54,9 +86,9 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> Objective:
         """
-        Get a user by their unique ID.
+        Get an objective by its unique ID with channel data.
 
         Args:
           extra_headers: Send extra headers
@@ -67,83 +99,30 @@ class UsersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not objective_id:
+            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
         return self._get(
-            f"/users/{user_id}",
+            f"/objectives/{objective_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
-        )
-
-    def update(
-        self,
-        user_id: str,
-        *,
-        display_name: Optional[str] | NotGiven = NOT_GIVEN,
-        email: Optional[str] | NotGiven = NOT_GIVEN,
-        is_active: Optional[bool] | NotGiven = NOT_GIVEN,
-        username: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """
-        Update a user by their unique ID.
-
-        Args:
-          display_name: The user's display name
-
-          email: The user's email address
-
-          is_active: Whether the user is active
-
-          username: The user's unique username
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
-        return self._put(
-            f"/users/{user_id}",
-            body=maybe_transform(
-                {
-                    "display_name": display_name,
-                    "email": email,
-                    "is_active": is_active,
-                    "username": username,
-                },
-                user_update_params.UserUpdateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=User,
+            cast_to=Objective,
         )
 
     def list(
         self,
         *,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
+        offset: Optional[int] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserListResponse:
+    ) -> ObjectiveListResponse:
         """
-        List all users.
+        List all objectives with channel data.
 
         Args:
           extra_headers: Send extra headers
@@ -155,20 +134,26 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get(
-            "/users",
+            "/objectives",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"limit": limit}, user_list_params.UserListParams),
+                query=maybe_transform(
+                    {
+                        "limit": limit,
+                        "offset": offset,
+                    },
+                    objective_list_params.ObjectiveListParams,
+                ),
             ),
-            cast_to=UserListResponse,
+            cast_to=ObjectiveListResponse,
         )
 
     def delete(
         self,
-        user_id: str,
+        objective_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -176,9 +161,9 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> Objective:
         """
-        Delete a user by their unique ID.
+        Delete an objective by its unique ID.
 
         Args:
           extra_headers: Send extra headers
@@ -189,29 +174,30 @@ class UsersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not objective_id:
+            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
         return self._delete(
-            f"/users/{user_id}",
+            f"/objectives/{objective_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=Objective,
         )
 
-    def retrieve_by_username(
+    def cancel(
         self,
-        username: str,
+        objective_id: str,
         *,
+        reason: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> Objective:
         """
-        Get a user by their unique username.
+        Cancel an objective by its unique ID.
 
         Args:
           extra_headers: Send extra headers
@@ -222,18 +208,20 @@ class UsersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not username:
-            raise ValueError(f"Expected a non-empty value for `username` but received {username!r}")
-        return self._get(
-            f"/users/username/{username}",
+        if not objective_id:
+            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
+        return self._post(
+            f"/objectives/{objective_id}:cancel",
+            body=maybe_transform({"reason": reason}, objective_cancel_params.ObjectiveCancelParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=Objective,
         )
 
-    def retrieve_current(
+    def stream_events(
         self,
+        objective_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -241,40 +229,85 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """Returns the authenticated user's profile."""
+    ) -> object:
+        """
+        Stream events for an objective by its unique ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not objective_id:
+            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
         return self._get(
-            "/users/me",
+            f"/objectives/{objective_id}:stream",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=object,
         )
 
 
-class AsyncUsersResource(AsyncAPIResource):
+class AsyncObjectivesResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncUsersResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncObjectivesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/felixs8696/delegate-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncUsersResourceWithRawResponse(self)
+        return AsyncObjectivesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncUsersResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncObjectivesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/felixs8696/delegate-python#with_streaming_response
         """
-        return AsyncUsersResourceWithStreamingResponse(self)
+        return AsyncObjectivesResourceWithStreamingResponse(self)
+
+    async def create(
+        self,
+        *,
+        name: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Objective:
+        """
+        Create a new objective with parameters.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/objectives",
+            body=await async_maybe_transform({"name": name}, objective_create_params.ObjectiveCreateParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Objective,
+        )
 
     async def retrieve(
         self,
-        user_id: str,
+        objective_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -282,9 +315,9 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> Objective:
         """
-        Get a user by their unique ID.
+        Get an objective by its unique ID with channel data.
 
         Args:
           extra_headers: Send extra headers
@@ -295,83 +328,30 @@ class AsyncUsersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not objective_id:
+            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
         return await self._get(
-            f"/users/{user_id}",
+            f"/objectives/{objective_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
-        )
-
-    async def update(
-        self,
-        user_id: str,
-        *,
-        display_name: Optional[str] | NotGiven = NOT_GIVEN,
-        email: Optional[str] | NotGiven = NOT_GIVEN,
-        is_active: Optional[bool] | NotGiven = NOT_GIVEN,
-        username: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """
-        Update a user by their unique ID.
-
-        Args:
-          display_name: The user's display name
-
-          email: The user's email address
-
-          is_active: Whether the user is active
-
-          username: The user's unique username
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
-        return await self._put(
-            f"/users/{user_id}",
-            body=await async_maybe_transform(
-                {
-                    "display_name": display_name,
-                    "email": email,
-                    "is_active": is_active,
-                    "username": username,
-                },
-                user_update_params.UserUpdateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=User,
+            cast_to=Objective,
         )
 
     async def list(
         self,
         *,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
+        offset: Optional[int] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserListResponse:
+    ) -> ObjectiveListResponse:
         """
-        List all users.
+        List all objectives with channel data.
 
         Args:
           extra_headers: Send extra headers
@@ -383,20 +363,26 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._get(
-            "/users",
+            "/objectives",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"limit": limit}, user_list_params.UserListParams),
+                query=await async_maybe_transform(
+                    {
+                        "limit": limit,
+                        "offset": offset,
+                    },
+                    objective_list_params.ObjectiveListParams,
+                ),
             ),
-            cast_to=UserListResponse,
+            cast_to=ObjectiveListResponse,
         )
 
     async def delete(
         self,
-        user_id: str,
+        objective_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -404,9 +390,9 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> Objective:
         """
-        Delete a user by their unique ID.
+        Delete an objective by its unique ID.
 
         Args:
           extra_headers: Send extra headers
@@ -417,29 +403,30 @@ class AsyncUsersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not objective_id:
+            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
         return await self._delete(
-            f"/users/{user_id}",
+            f"/objectives/{objective_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=Objective,
         )
 
-    async def retrieve_by_username(
+    async def cancel(
         self,
-        username: str,
+        objective_id: str,
         *,
+        reason: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> Objective:
         """
-        Get a user by their unique username.
+        Cancel an objective by its unique ID.
 
         Args:
           extra_headers: Send extra headers
@@ -450,18 +437,20 @@ class AsyncUsersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not username:
-            raise ValueError(f"Expected a non-empty value for `username` but received {username!r}")
-        return await self._get(
-            f"/users/username/{username}",
+        if not objective_id:
+            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
+        return await self._post(
+            f"/objectives/{objective_id}:cancel",
+            body=await async_maybe_transform({"reason": reason}, objective_cancel_params.ObjectiveCancelParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=Objective,
         )
 
-    async def retrieve_current(
+    async def stream_events(
         self,
+        objective_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -469,108 +458,121 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """Returns the authenticated user's profile."""
+    ) -> object:
+        """
+        Stream events for an objective by its unique ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not objective_id:
+            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
         return await self._get(
-            "/users/me",
+            f"/objectives/{objective_id}:stream",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=object,
         )
 
 
-class UsersResourceWithRawResponse:
-    def __init__(self, users: UsersResource) -> None:
-        self._users = users
+class ObjectivesResourceWithRawResponse:
+    def __init__(self, objectives: ObjectivesResource) -> None:
+        self._objectives = objectives
 
+        self.create = to_raw_response_wrapper(
+            objectives.create,
+        )
         self.retrieve = to_raw_response_wrapper(
-            users.retrieve,
-        )
-        self.update = to_raw_response_wrapper(
-            users.update,
+            objectives.retrieve,
         )
         self.list = to_raw_response_wrapper(
-            users.list,
+            objectives.list,
         )
         self.delete = to_raw_response_wrapper(
-            users.delete,
+            objectives.delete,
         )
-        self.retrieve_by_username = to_raw_response_wrapper(
-            users.retrieve_by_username,
+        self.cancel = to_raw_response_wrapper(
+            objectives.cancel,
         )
-        self.retrieve_current = to_raw_response_wrapper(
-            users.retrieve_current,
+        self.stream_events = to_raw_response_wrapper(
+            objectives.stream_events,
         )
 
 
-class AsyncUsersResourceWithRawResponse:
-    def __init__(self, users: AsyncUsersResource) -> None:
-        self._users = users
+class AsyncObjectivesResourceWithRawResponse:
+    def __init__(self, objectives: AsyncObjectivesResource) -> None:
+        self._objectives = objectives
 
+        self.create = async_to_raw_response_wrapper(
+            objectives.create,
+        )
         self.retrieve = async_to_raw_response_wrapper(
-            users.retrieve,
-        )
-        self.update = async_to_raw_response_wrapper(
-            users.update,
+            objectives.retrieve,
         )
         self.list = async_to_raw_response_wrapper(
-            users.list,
+            objectives.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            users.delete,
+            objectives.delete,
         )
-        self.retrieve_by_username = async_to_raw_response_wrapper(
-            users.retrieve_by_username,
+        self.cancel = async_to_raw_response_wrapper(
+            objectives.cancel,
         )
-        self.retrieve_current = async_to_raw_response_wrapper(
-            users.retrieve_current,
+        self.stream_events = async_to_raw_response_wrapper(
+            objectives.stream_events,
         )
 
 
-class UsersResourceWithStreamingResponse:
-    def __init__(self, users: UsersResource) -> None:
-        self._users = users
+class ObjectivesResourceWithStreamingResponse:
+    def __init__(self, objectives: ObjectivesResource) -> None:
+        self._objectives = objectives
 
+        self.create = to_streamed_response_wrapper(
+            objectives.create,
+        )
         self.retrieve = to_streamed_response_wrapper(
-            users.retrieve,
-        )
-        self.update = to_streamed_response_wrapper(
-            users.update,
+            objectives.retrieve,
         )
         self.list = to_streamed_response_wrapper(
-            users.list,
+            objectives.list,
         )
         self.delete = to_streamed_response_wrapper(
-            users.delete,
+            objectives.delete,
         )
-        self.retrieve_by_username = to_streamed_response_wrapper(
-            users.retrieve_by_username,
+        self.cancel = to_streamed_response_wrapper(
+            objectives.cancel,
         )
-        self.retrieve_current = to_streamed_response_wrapper(
-            users.retrieve_current,
+        self.stream_events = to_streamed_response_wrapper(
+            objectives.stream_events,
         )
 
 
-class AsyncUsersResourceWithStreamingResponse:
-    def __init__(self, users: AsyncUsersResource) -> None:
-        self._users = users
+class AsyncObjectivesResourceWithStreamingResponse:
+    def __init__(self, objectives: AsyncObjectivesResource) -> None:
+        self._objectives = objectives
 
+        self.create = async_to_streamed_response_wrapper(
+            objectives.create,
+        )
         self.retrieve = async_to_streamed_response_wrapper(
-            users.retrieve,
-        )
-        self.update = async_to_streamed_response_wrapper(
-            users.update,
+            objectives.retrieve,
         )
         self.list = async_to_streamed_response_wrapper(
-            users.list,
+            objectives.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            users.delete,
+            objectives.delete,
         )
-        self.retrieve_by_username = async_to_streamed_response_wrapper(
-            users.retrieve_by_username,
+        self.cancel = async_to_streamed_response_wrapper(
+            objectives.cancel,
         )
-        self.retrieve_current = async_to_streamed_response_wrapper(
-            users.retrieve_current,
+        self.stream_events = async_to_streamed_response_wrapper(
+            objectives.stream_events,
         )

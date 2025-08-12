@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 __all__ = [
-    "EventCreateParams",
+    "MessageCreateParams",
     "Content",
     "ContentTextContentEntity",
     "ContentToolRequestContentEntity",
@@ -14,12 +14,21 @@ __all__ = [
 ]
 
 
-class EventCreateParams(TypedDict, total=False):
-    content: Required[Content]
-    """The event content"""
+class MessageCreateParams(TypedDict, total=False):
+    channel_id: Required[str]
+    """The channel this message belongs to"""
 
-    objective_id: Required[str]
-    """The objective id the event is for"""
+    content: Required[Content]
+    """The message content"""
+
+    message_metadata: Optional[Dict[str, object]]
+    """Additional metadata for the message (reactions, files, etc.)"""
+
+    parent_message_id: Optional[str]
+    """The parent message id if this is a reply"""
+
+    streaming_status: Optional[Literal["pending", "streaming", "completed", "failed"]]
+    """Status of message streaming"""
 
 
 class ContentTextContentEntity(TypedDict, total=False):

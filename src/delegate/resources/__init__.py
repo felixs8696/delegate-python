@@ -40,6 +40,14 @@ from .channels import (
     ChannelsResourceWithStreamingResponse,
     AsyncChannelsResourceWithStreamingResponse,
 )
+from .messages import (
+    MessagesResource,
+    AsyncMessagesResource,
+    MessagesResourceWithRawResponse,
+    AsyncMessagesResourceWithRawResponse,
+    MessagesResourceWithStreamingResponse,
+    AsyncMessagesResourceWithStreamingResponse,
+)
 from .objectives import (
     ObjectivesResource,
     AsyncObjectivesResource,
@@ -47,6 +55,14 @@ from .objectives import (
     AsyncObjectivesResourceWithRawResponse,
     ObjectivesResourceWithStreamingResponse,
     AsyncObjectivesResourceWithStreamingResponse,
+)
+from .notifications import (
+    NotificationsResource,
+    AsyncNotificationsResource,
+    NotificationsResourceWithRawResponse,
+    AsyncNotificationsResourceWithRawResponse,
+    NotificationsResourceWithStreamingResponse,
+    AsyncNotificationsResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -86,4 +102,16 @@ __all__ = [
     "AsyncChannelsResourceWithRawResponse",
     "ChannelsResourceWithStreamingResponse",
     "AsyncChannelsResourceWithStreamingResponse",
+    "MessagesResource",
+    "AsyncMessagesResource",
+    "MessagesResourceWithRawResponse",
+    "AsyncMessagesResourceWithRawResponse",
+    "MessagesResourceWithStreamingResponse",
+    "AsyncMessagesResourceWithStreamingResponse",
+    "NotificationsResource",
+    "AsyncNotificationsResource",
+    "NotificationsResourceWithRawResponse",
+    "AsyncNotificationsResourceWithRawResponse",
+    "NotificationsResourceWithStreamingResponse",
+    "AsyncNotificationsResourceWithStreamingResponse",
 ]

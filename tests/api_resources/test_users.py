@@ -233,6 +233,34 @@ class TestUsers:
                 "",
             )
 
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_retrieve_current(self, client: Delegate) -> None:
+        user = client.users.retrieve_current()
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_retrieve_current(self, client: Delegate) -> None:
+        response = client.users.with_raw_response.retrieve_current()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        user = response.parse()
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_retrieve_current(self, client: Delegate) -> None:
+        with client.users.with_streaming_response.retrieve_current() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            user = response.parse()
+            assert_matches_type(User, user, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncUsers:
     parametrize = pytest.mark.parametrize(
@@ -454,3 +482,31 @@ class TestAsyncUsers:
             await async_client.users.with_raw_response.retrieve_by_username(
                 "",
             )
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_retrieve_current(self, async_client: AsyncDelegate) -> None:
+        user = await async_client.users.retrieve_current()
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_retrieve_current(self, async_client: AsyncDelegate) -> None:
+        response = await async_client.users.with_raw_response.retrieve_current()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        user = await response.parse()
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_retrieve_current(self, async_client: AsyncDelegate) -> None:
+        async with async_client.users.with_streaming_response.retrieve_current() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            user = await response.parse()
+            assert_matches_type(User, user, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
