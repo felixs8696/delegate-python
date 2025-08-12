@@ -6,15 +6,14 @@ from typing_extensions import Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
-from .text_content_entity import TextContentEntity
-from .tool_request_content_entity import ToolRequestContentEntity
-from .tool_response_content_entity import ToolResponseContentEntity
+from .text_content import TextContent
+from .tool_request_content import ToolRequestContent
+from .tool_response_content import ToolResponseContent
 
 __all__ = ["Event", "Content"]
 
 Content: TypeAlias = Annotated[
-    Union[TextContentEntity, ToolRequestContentEntity, ToolResponseContentEntity, None],
-    PropertyInfo(discriminator="type"),
+    Union[TextContent, ToolRequestContent, ToolResponseContent, None], PropertyInfo(discriminator="type")
 ]
 
 

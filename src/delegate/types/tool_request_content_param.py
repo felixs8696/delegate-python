@@ -1,28 +1,28 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, Optional
-from typing_extensions import Literal
+from __future__ import annotations
 
-from .._models import BaseModel
+from typing import Dict
+from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["ToolRequestContentEntity"]
+__all__ = ["ToolRequestContentParam"]
 
 
-class ToolRequestContentEntity(BaseModel):
-    arguments: Dict[str, object]
+class ToolRequestContentParam(TypedDict, total=False):
+    arguments: Required[Dict[str, object]]
     """The arguments to the tool."""
 
-    author: Literal["system", "user", "assistant"]
+    author: Required[Literal["system", "user", "assistant"]]
     """
     The role of the messages author, in this case `system`, `user`, `assistant`, or
     `tool`.
     """
 
-    name: str
+    name: Required[str]
     """The name of the tool that is being requested."""
 
-    tool_call_id: str
+    tool_call_id: Required[str]
     """The ID of the tool call that is being requested."""
 
-    type: Optional[Literal["tool_request"]] = None
+    type: Literal["tool_request"]
     """The type of the message, in this case `tool_request`."""

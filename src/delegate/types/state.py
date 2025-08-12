@@ -9,15 +9,17 @@ __all__ = ["State"]
 
 
 class State(BaseModel):
-    id: str
-    """The objective state's unique id"""
-
-    created_at: datetime
-    """The timestamp when the state was created"""
-
     objective_id: str
+    """ID of the objective this state belongs to. The objective_id is globally unique."""
 
     state: Dict[str, object]
+    """The state object that contains arbitrary data"""
+
+    id: Optional[str] = None
+    """The objective state's unique id"""
+
+    created_at: Optional[datetime] = None
+    """The timestamp when the state was created"""
 
     updated_at: Optional[datetime] = None
     """The timestamp when the state was last updated"""

@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import httpx
 
-from ..types import user_list_params, user_update_params
+from ..types import notification_list_params, notification_create_params, notification_update_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -17,36 +15,82 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..types.user import User
 from .._base_client import make_request_options
-from ..types.user_list_response import UserListResponse
+from ..types.notification_list_response import NotificationListResponse
+from ..types.notification_create_response import NotificationCreateResponse
+from ..types.notification_delete_response import NotificationDeleteResponse
+from ..types.notification_update_response import NotificationUpdateResponse
+from ..types.notification_retrieve_response import NotificationRetrieveResponse
 
-__all__ = ["UsersResource", "AsyncUsersResource"]
+__all__ = ["NotificationsResource", "AsyncNotificationsResource"]
 
 
-class UsersResource(SyncAPIResource):
+class NotificationsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> UsersResourceWithRawResponse:
+    def with_raw_response(self) -> NotificationsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/felixs8696/delegate-python#accessing-raw-response-data-eg-headers
         """
-        return UsersResourceWithRawResponse(self)
+        return NotificationsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> UsersResourceWithStreamingResponse:
+    def with_streaming_response(self) -> NotificationsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/felixs8696/delegate-python#with_streaming_response
         """
-        return UsersResourceWithStreamingResponse(self)
+        return NotificationsResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        *,
+        content: notification_create_params.Content,
+        objective_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> NotificationCreateResponse:
+        """
+        Create a new notification for an objective.
+
+        Args:
+          content: The notification content
+
+          objective_id: The objective ID this notification belongs to
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/notifications",
+            body=maybe_transform(
+                {
+                    "content": content,
+                    "objective_id": objective_id,
+                },
+                notification_create_params.NotificationCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NotificationCreateResponse,
+        )
 
     def retrieve(
         self,
-        user_id: str,
+        notification_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -54,9 +98,9 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> NotificationRetrieveResponse:
         """
-        Get a user by their unique ID.
+        Get a notification by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -67,42 +111,33 @@ class UsersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not notification_id:
+            raise ValueError(f"Expected a non-empty value for `notification_id` but received {notification_id!r}")
         return self._get(
-            f"/users/{user_id}",
+            f"/notifications/{notification_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=NotificationRetrieveResponse,
         )
 
     def update(
         self,
-        user_id: str,
+        notification_id: str,
         *,
-        display_name: Optional[str] | NotGiven = NOT_GIVEN,
-        email: Optional[str] | NotGiven = NOT_GIVEN,
-        is_active: Optional[bool] | NotGiven = NOT_GIVEN,
-        username: Optional[str] | NotGiven = NOT_GIVEN,
+        content: notification_update_params.Content,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> NotificationUpdateResponse:
         """
-        Update a user by their unique ID.
+        Update a notification's content.
 
         Args:
-          display_name: The user's display name
-
-          email: The user's email address
-
-          is_active: Whether the user is active
-
-          username: The user's unique username
+          content: The updated notification content
 
           extra_headers: Send extra headers
 
@@ -112,38 +147,31 @@ class UsersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not notification_id:
+            raise ValueError(f"Expected a non-empty value for `notification_id` but received {notification_id!r}")
         return self._put(
-            f"/users/{user_id}",
-            body=maybe_transform(
-                {
-                    "display_name": display_name,
-                    "email": email,
-                    "is_active": is_active,
-                    "username": username,
-                },
-                user_update_params.UserUpdateParams,
-            ),
+            f"/notifications/{notification_id}",
+            body=maybe_transform({"content": content}, notification_update_params.NotificationUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=NotificationUpdateResponse,
         )
 
     def list(
         self,
         *,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        objective_id: str,
+        limit: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserListResponse:
+    ) -> NotificationListResponse:
         """
-        List all users.
+        List notifications for an objective.
 
         Args:
           extra_headers: Send extra headers
@@ -155,20 +183,26 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get(
-            "/users",
+            "/notifications",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"limit": limit}, user_list_params.UserListParams),
+                query=maybe_transform(
+                    {
+                        "objective_id": objective_id,
+                        "limit": limit,
+                    },
+                    notification_list_params.NotificationListParams,
+                ),
             ),
-            cast_to=UserListResponse,
+            cast_to=NotificationListResponse,
         )
 
     def delete(
         self,
-        user_id: str,
+        notification_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -176,9 +210,9 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> NotificationDeleteResponse:
         """
-        Delete a user by their unique ID.
+        Delete a notification.
 
         Args:
           extra_headers: Send extra headers
@@ -189,92 +223,83 @@ class UsersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not notification_id:
+            raise ValueError(f"Expected a non-empty value for `notification_id` but received {notification_id!r}")
         return self._delete(
-            f"/users/{user_id}",
+            f"/notifications/{notification_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
-        )
-
-    def retrieve_by_username(
-        self,
-        username: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """
-        Get a user by their unique username.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not username:
-            raise ValueError(f"Expected a non-empty value for `username` but received {username!r}")
-        return self._get(
-            f"/users/username/{username}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=User,
-        )
-
-    def retrieve_current(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """Returns the authenticated user's profile."""
-        return self._get(
-            "/users/me",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=User,
+            cast_to=NotificationDeleteResponse,
         )
 
 
-class AsyncUsersResource(AsyncAPIResource):
+class AsyncNotificationsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncUsersResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncNotificationsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/felixs8696/delegate-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncUsersResourceWithRawResponse(self)
+        return AsyncNotificationsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncUsersResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncNotificationsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/felixs8696/delegate-python#with_streaming_response
         """
-        return AsyncUsersResourceWithStreamingResponse(self)
+        return AsyncNotificationsResourceWithStreamingResponse(self)
+
+    async def create(
+        self,
+        *,
+        content: notification_create_params.Content,
+        objective_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> NotificationCreateResponse:
+        """
+        Create a new notification for an objective.
+
+        Args:
+          content: The notification content
+
+          objective_id: The objective ID this notification belongs to
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/notifications",
+            body=await async_maybe_transform(
+                {
+                    "content": content,
+                    "objective_id": objective_id,
+                },
+                notification_create_params.NotificationCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NotificationCreateResponse,
+        )
 
     async def retrieve(
         self,
-        user_id: str,
+        notification_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -282,9 +307,9 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> NotificationRetrieveResponse:
         """
-        Get a user by their unique ID.
+        Get a notification by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -295,42 +320,33 @@ class AsyncUsersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not notification_id:
+            raise ValueError(f"Expected a non-empty value for `notification_id` but received {notification_id!r}")
         return await self._get(
-            f"/users/{user_id}",
+            f"/notifications/{notification_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=NotificationRetrieveResponse,
         )
 
     async def update(
         self,
-        user_id: str,
+        notification_id: str,
         *,
-        display_name: Optional[str] | NotGiven = NOT_GIVEN,
-        email: Optional[str] | NotGiven = NOT_GIVEN,
-        is_active: Optional[bool] | NotGiven = NOT_GIVEN,
-        username: Optional[str] | NotGiven = NOT_GIVEN,
+        content: notification_update_params.Content,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> NotificationUpdateResponse:
         """
-        Update a user by their unique ID.
+        Update a notification's content.
 
         Args:
-          display_name: The user's display name
-
-          email: The user's email address
-
-          is_active: Whether the user is active
-
-          username: The user's unique username
+          content: The updated notification content
 
           extra_headers: Send extra headers
 
@@ -340,38 +356,31 @@ class AsyncUsersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not notification_id:
+            raise ValueError(f"Expected a non-empty value for `notification_id` but received {notification_id!r}")
         return await self._put(
-            f"/users/{user_id}",
-            body=await async_maybe_transform(
-                {
-                    "display_name": display_name,
-                    "email": email,
-                    "is_active": is_active,
-                    "username": username,
-                },
-                user_update_params.UserUpdateParams,
-            ),
+            f"/notifications/{notification_id}",
+            body=await async_maybe_transform({"content": content}, notification_update_params.NotificationUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=NotificationUpdateResponse,
         )
 
     async def list(
         self,
         *,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        objective_id: str,
+        limit: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserListResponse:
+    ) -> NotificationListResponse:
         """
-        List all users.
+        List notifications for an objective.
 
         Args:
           extra_headers: Send extra headers
@@ -383,20 +392,26 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._get(
-            "/users",
+            "/notifications",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"limit": limit}, user_list_params.UserListParams),
+                query=await async_maybe_transform(
+                    {
+                        "objective_id": objective_id,
+                        "limit": limit,
+                    },
+                    notification_list_params.NotificationListParams,
+                ),
             ),
-            cast_to=UserListResponse,
+            cast_to=NotificationListResponse,
         )
 
     async def delete(
         self,
-        user_id: str,
+        notification_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -404,9 +419,9 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> NotificationDeleteResponse:
         """
-        Delete a user by their unique ID.
+        Delete a notification.
 
         Args:
           extra_headers: Send extra headers
@@ -417,160 +432,96 @@ class AsyncUsersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+        if not notification_id:
+            raise ValueError(f"Expected a non-empty value for `notification_id` but received {notification_id!r}")
         return await self._delete(
-            f"/users/{user_id}",
+            f"/notifications/{notification_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
-        )
-
-    async def retrieve_by_username(
-        self,
-        username: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """
-        Get a user by their unique username.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not username:
-            raise ValueError(f"Expected a non-empty value for `username` but received {username!r}")
-        return await self._get(
-            f"/users/username/{username}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=User,
-        )
-
-    async def retrieve_current(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
-        """Returns the authenticated user's profile."""
-        return await self._get(
-            "/users/me",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=User,
+            cast_to=NotificationDeleteResponse,
         )
 
 
-class UsersResourceWithRawResponse:
-    def __init__(self, users: UsersResource) -> None:
-        self._users = users
+class NotificationsResourceWithRawResponse:
+    def __init__(self, notifications: NotificationsResource) -> None:
+        self._notifications = notifications
 
+        self.create = to_raw_response_wrapper(
+            notifications.create,
+        )
         self.retrieve = to_raw_response_wrapper(
-            users.retrieve,
+            notifications.retrieve,
         )
         self.update = to_raw_response_wrapper(
-            users.update,
+            notifications.update,
         )
         self.list = to_raw_response_wrapper(
-            users.list,
+            notifications.list,
         )
         self.delete = to_raw_response_wrapper(
-            users.delete,
-        )
-        self.retrieve_by_username = to_raw_response_wrapper(
-            users.retrieve_by_username,
-        )
-        self.retrieve_current = to_raw_response_wrapper(
-            users.retrieve_current,
+            notifications.delete,
         )
 
 
-class AsyncUsersResourceWithRawResponse:
-    def __init__(self, users: AsyncUsersResource) -> None:
-        self._users = users
+class AsyncNotificationsResourceWithRawResponse:
+    def __init__(self, notifications: AsyncNotificationsResource) -> None:
+        self._notifications = notifications
 
+        self.create = async_to_raw_response_wrapper(
+            notifications.create,
+        )
         self.retrieve = async_to_raw_response_wrapper(
-            users.retrieve,
+            notifications.retrieve,
         )
         self.update = async_to_raw_response_wrapper(
-            users.update,
+            notifications.update,
         )
         self.list = async_to_raw_response_wrapper(
-            users.list,
+            notifications.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            users.delete,
-        )
-        self.retrieve_by_username = async_to_raw_response_wrapper(
-            users.retrieve_by_username,
-        )
-        self.retrieve_current = async_to_raw_response_wrapper(
-            users.retrieve_current,
+            notifications.delete,
         )
 
 
-class UsersResourceWithStreamingResponse:
-    def __init__(self, users: UsersResource) -> None:
-        self._users = users
+class NotificationsResourceWithStreamingResponse:
+    def __init__(self, notifications: NotificationsResource) -> None:
+        self._notifications = notifications
 
+        self.create = to_streamed_response_wrapper(
+            notifications.create,
+        )
         self.retrieve = to_streamed_response_wrapper(
-            users.retrieve,
+            notifications.retrieve,
         )
         self.update = to_streamed_response_wrapper(
-            users.update,
+            notifications.update,
         )
         self.list = to_streamed_response_wrapper(
-            users.list,
+            notifications.list,
         )
         self.delete = to_streamed_response_wrapper(
-            users.delete,
-        )
-        self.retrieve_by_username = to_streamed_response_wrapper(
-            users.retrieve_by_username,
-        )
-        self.retrieve_current = to_streamed_response_wrapper(
-            users.retrieve_current,
+            notifications.delete,
         )
 
 
-class AsyncUsersResourceWithStreamingResponse:
-    def __init__(self, users: AsyncUsersResource) -> None:
-        self._users = users
+class AsyncNotificationsResourceWithStreamingResponse:
+    def __init__(self, notifications: AsyncNotificationsResource) -> None:
+        self._notifications = notifications
 
+        self.create = async_to_streamed_response_wrapper(
+            notifications.create,
+        )
         self.retrieve = async_to_streamed_response_wrapper(
-            users.retrieve,
+            notifications.retrieve,
         )
         self.update = async_to_streamed_response_wrapper(
-            users.update,
+            notifications.update,
         )
         self.list = async_to_streamed_response_wrapper(
-            users.list,
+            notifications.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            users.delete,
-        )
-        self.retrieve_by_username = async_to_streamed_response_wrapper(
-            users.retrieve_by_username,
-        )
-        self.retrieve_current = async_to_streamed_response_wrapper(
-            users.retrieve_current,
+            notifications.delete,
         )

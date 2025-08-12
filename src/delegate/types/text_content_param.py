@@ -1,22 +1,21 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
-from typing_extensions import Literal
+from __future__ import annotations
 
-from .._models import BaseModel
+from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["TextContentEntity"]
+__all__ = ["TextContentParam"]
 
 
-class TextContentEntity(BaseModel):
-    author: Literal["system", "user", "assistant"]
+class TextContentParam(TypedDict, total=False):
+    author: Required[Literal["system", "user", "assistant"]]
     """
     The role of the messages author, in this case `system`, `user`, `assistant`, or
     `tool`.
     """
 
-    content: str
+    content: Required[str]
     """The contents of the text message."""
 
-    type: Optional[Literal["text"]] = None
+    type: Literal["text"]
     """The type of the message, in this case `text`."""

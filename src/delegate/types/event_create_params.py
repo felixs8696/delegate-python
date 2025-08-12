@@ -5,9 +5,9 @@ from __future__ import annotations
 from typing import Union
 from typing_extensions import Required, TypeAlias, TypedDict
 
-from .text_content_entity_param import TextContentEntityParam
-from .tool_request_content_entity_param import ToolRequestContentEntityParam
-from .tool_response_content_entity_param import ToolResponseContentEntityParam
+from .text_content_param import TextContentParam
+from .tool_request_content_param import ToolRequestContentParam
+from .tool_response_content_param import ToolResponseContentParam
 
 __all__ = ["EventCreateParams", "Content"]
 
@@ -20,4 +20,4 @@ class EventCreateParams(TypedDict, total=False):
     """The objective id the event is for"""
 
 
-Content: TypeAlias = Union[TextContentEntityParam, ToolRequestContentEntityParam, ToolResponseContentEntityParam]
+Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam]
