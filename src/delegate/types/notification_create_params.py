@@ -11,10 +11,10 @@ from .._utils import PropertyInfo
 __all__ = [
     "NotificationCreateParams",
     "Content",
-    "ContentScheduledActivityEntity",
-    "ContentCompletedActivityEntity",
-    "ContentApprovalRequestEntity",
-    "ContentInterventionRequestEntity",
+    "ContentScheduledActivity",
+    "ContentCompletedActivity",
+    "ContentApprovalRequest",
+    "ContentInterventionRequest",
 ]
 
 
@@ -26,7 +26,7 @@ class NotificationCreateParams(TypedDict, total=False):
     """The objective ID this notification belongs to"""
 
 
-class ContentScheduledActivityEntity(TypedDict, total=False):
+class ContentScheduledActivity(TypedDict, total=False):
     description: Required[str]
     """The description of the notification"""
 
@@ -43,7 +43,7 @@ class ContentScheduledActivityEntity(TypedDict, total=False):
     """The type of notification"""
 
 
-class ContentCompletedActivityEntity(TypedDict, total=False):
+class ContentCompletedActivity(TypedDict, total=False):
     completed_at: Required[Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]]
     """The timestamp when the activity was completed"""
 
@@ -57,7 +57,7 @@ class ContentCompletedActivityEntity(TypedDict, total=False):
     """The type of notification"""
 
 
-class ContentApprovalRequestEntity(TypedDict, total=False):
+class ContentApprovalRequest(TypedDict, total=False):
     created_at: Required[Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]]
     """The timestamp when the notification was created"""
 
@@ -80,7 +80,7 @@ class ContentApprovalRequestEntity(TypedDict, total=False):
     """The type of notification"""
 
 
-class ContentInterventionRequestEntity(TypedDict, total=False):
+class ContentInterventionRequest(TypedDict, total=False):
     created_at: Required[Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]]
     """The timestamp when the notification was created"""
 
@@ -101,8 +101,5 @@ class ContentInterventionRequestEntity(TypedDict, total=False):
 
 
 Content: TypeAlias = Union[
-    ContentScheduledActivityEntity,
-    ContentCompletedActivityEntity,
-    ContentApprovalRequestEntity,
-    ContentInterventionRequestEntity,
+    ContentScheduledActivity, ContentCompletedActivity, ContentApprovalRequest, ContentInterventionRequest
 ]

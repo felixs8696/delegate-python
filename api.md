@@ -119,7 +119,7 @@ Methods:
 Types:
 
 ```python
-from delegate.types import Message, MessageListResponse
+from delegate.types import Message, TextContent, MessageListResponse
 ```
 
 Methods:
