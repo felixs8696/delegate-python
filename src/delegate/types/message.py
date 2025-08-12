@@ -6,73 +6,14 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .text_content import TextContent
+from .tool_request_content import ToolRequestContent
+from .tool_response_content import ToolResponseContent
 
-__all__ = [
-    "Message",
-    "Content",
-    "ContentTextContentEntity",
-    "ContentToolRequestContentEntity",
-    "ContentToolResponseContentEntity",
-]
-
-
-class ContentTextContentEntity(BaseModel):
-    author: Literal["system", "user", "assistant"]
-    """
-    The role of the messages author, in this case `system`, `user`, `assistant`, or
-    `tool`.
-    """
-
-    content: str
-    """The contents of the text message."""
-
-    type: Optional[Literal["text"]] = None
-    """The type of the message, in this case `text`."""
-
-
-class ContentToolRequestContentEntity(BaseModel):
-    arguments: Dict[str, object]
-    """The arguments to the tool."""
-
-    author: Literal["system", "user", "assistant"]
-    """
-    The role of the messages author, in this case `system`, `user`, `assistant`, or
-    `tool`.
-    """
-
-    name: str
-    """The name of the tool that is being requested."""
-
-    tool_call_id: str
-    """The ID of the tool call that is being requested."""
-
-    type: Optional[Literal["tool_request"]] = None
-    """The type of the message, in this case `tool_request`."""
-
-
-class ContentToolResponseContentEntity(BaseModel):
-    author: Literal["system", "user", "assistant"]
-    """
-    The role of the messages author, in this case `system`, `user`, `assistant`, or
-    `tool`.
-    """
-
-    content: object
-    """The result of the tool."""
-
-    name: str
-    """The name of the tool that is being responded to."""
-
-    tool_call_id: str
-    """The ID of the tool call that is being responded to."""
-
-    type: Optional[Literal["tool_response"]] = None
-    """The type of the message, in this case `tool_response`."""
-
+__all__ = ["Message", "Content"]
 
 Content: TypeAlias = Annotated[
-    Union[ContentTextContentEntity, ContentToolRequestContentEntity, ContentToolResponseContentEntity],
-    PropertyInfo(discriminator="type"),
+    Union[TextContent, ToolRequestContent, ToolResponseContent], PropertyInfo(discriminator="type")
 ]
 
 
