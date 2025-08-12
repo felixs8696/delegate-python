@@ -17,6 +17,7 @@ from .channel_membership import ChannelMembership as ChannelMembership
 from .span_create_params import SpanCreateParams as SpanCreateParams
 from .span_list_response import SpanListResponse as SpanListResponse
 from .span_update_params import SpanUpdateParams as SpanUpdateParams
+from .text_content_param import TextContentParam as TextContentParam
 from .user_list_response import UserListResponse as UserListResponse
 from .user_update_params import UserUpdateParams as UserUpdateParams
 from .channel_join_params import ChannelJoinParams as ChannelJoinParams

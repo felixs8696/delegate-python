@@ -5,13 +5,9 @@ from __future__ import annotations
 from typing import Dict, Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-__all__ = [
-    "MessageCreateParams",
-    "Content",
-    "ContentTextContentEntity",
-    "ContentToolRequestContentEntity",
-    "ContentToolResponseContentEntity",
-]
+from .text_content_param import TextContentParam
+
+__all__ = ["MessageCreateParams", "Content", "ContentToolRequestContent", "ContentToolResponseContent"]
 
 
 class MessageCreateParams(TypedDict, total=False):
@@ -31,21 +27,7 @@ class MessageCreateParams(TypedDict, total=False):
     """Status of message streaming"""
 
 
-class ContentTextContentEntity(TypedDict, total=False):
-    author: Required[Literal["system", "user", "assistant"]]
-    """
-    The role of the messages author, in this case `system`, `user`, `assistant`, or
-    `tool`.
-    """
-
-    content: Required[str]
-    """The contents of the text message."""
-
-    type: Literal["text"]
-    """The type of the message, in this case `text`."""
-
-
-class ContentToolRequestContentEntity(TypedDict, total=False):
+class ContentToolRequestContent(TypedDict, total=False):
     arguments: Required[Dict[str, object]]
     """The arguments to the tool."""
 
@@ -65,7 +47,7 @@ class ContentToolRequestContentEntity(TypedDict, total=False):
     """The type of the message, in this case `tool_request`."""
 
 
-class ContentToolResponseContentEntity(TypedDict, total=False):
+class ContentToolResponseContent(TypedDict, total=False):
     author: Required[Literal["system", "user", "assistant"]]
     """
     The role of the messages author, in this case `system`, `user`, `assistant`, or
@@ -85,4 +67,4 @@ class ContentToolResponseContentEntity(TypedDict, total=False):
     """The type of the message, in this case `tool_response`."""
 
 
-Content: TypeAlias = Union[ContentTextContentEntity, ContentToolRequestContentEntity, ContentToolResponseContentEntity]
+Content: TypeAlias = Union[TextContentParam, ContentToolRequestContent, ContentToolResponseContent]
