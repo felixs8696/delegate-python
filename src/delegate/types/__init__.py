@@ -14,6 +14,7 @@ from .approval_request import ApprovalRequest as ApprovalRequest
 from .span_list_params import SpanListParams as SpanListParams
 from .user_list_params import UserListParams as UserListParams
 from .event_list_params import EventListParams as EventListParams
+from .reasoning_content import ReasoningContent as ReasoningContent
 from .state_list_params import StateListParams as StateListParams
 from .channel_membership import ChannelMembership as ChannelMembership
 from .completed_activity import CompletedActivity as CompletedActivity
@@ -47,6 +48,7 @@ from .approval_request_param import ApprovalRequestParam as ApprovalRequestParam
 from .objective_cancel_params import ObjectiveCancelParams as ObjectiveCancelParams
 from .objective_create_params import ObjectiveCreateParams as ObjectiveCreateParams
 from .objective_list_response import ObjectiveListResponse as ObjectiveListResponse
+from .reasoning_content_param import ReasoningContentParam as ReasoningContentParam
 from .completed_activity_param import CompletedActivityParam as CompletedActivityParam
 from .notification_list_params import NotificationListParams as NotificationListParams
 from .scheduled_activity_param import ScheduledActivityParam as ScheduledActivityParam

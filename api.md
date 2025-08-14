@@ -120,6 +120,7 @@ Types:
 ```python
 from delegate.types import (
     Message,
+    ReasoningContent,
     TextContent,
     ToolRequestContent,
     ToolResponseContent,
