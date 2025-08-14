@@ -6,6 +6,7 @@ from typing import Dict, Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .text_content_param import TextContentParam
+from .reasoning_content_param import ReasoningContentParam
 from .tool_request_content_param import ToolRequestContentParam
 from .tool_response_content_param import ToolResponseContentParam
 
@@ -29,4 +30,4 @@ class MessageCreateParams(TypedDict, total=False):
     """Status of message streaming"""
 
 
-Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam]
+Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam, ReasoningContentParam]

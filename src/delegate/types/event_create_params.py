@@ -6,6 +6,7 @@ from typing import Union
 from typing_extensions import Required, TypeAlias, TypedDict
 
 from .text_content_param import TextContentParam
+from .reasoning_content_param import ReasoningContentParam
 from .tool_request_content_param import ToolRequestContentParam
 from .tool_response_content_param import ToolResponseContentParam
 
@@ -20,4 +21,4 @@ class EventCreateParams(TypedDict, total=False):
     """The objective id the event is for"""
 
 
-Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam]
+Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam, ReasoningContentParam]

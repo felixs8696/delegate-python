@@ -7,13 +7,15 @@ from typing_extensions import Annotated, TypeAlias
 from .._utils import PropertyInfo
 from .._models import BaseModel
 from .text_content import TextContent
+from .reasoning_content import ReasoningContent
 from .tool_request_content import ToolRequestContent
 from .tool_response_content import ToolResponseContent
 
 __all__ = ["Event", "Content"]
 
 Content: TypeAlias = Annotated[
-    Union[TextContent, ToolRequestContent, ToolResponseContent, None], PropertyInfo(discriminator="type")
+    Union[TextContent, ToolRequestContent, ToolResponseContent, ReasoningContent, None],
+    PropertyInfo(discriminator="type"),
 ]
 
 

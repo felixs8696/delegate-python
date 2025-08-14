@@ -19,7 +19,6 @@ Methods:
 - <code title="get /objectives">client.objectives.<a href="./src/delegate/resources/objectives.py">list</a>(\*\*<a href="src/delegate/types/objective_list_params.py">params</a>) -> <a href="./src/delegate/types/objective_list_response.py">ObjectiveListResponse</a></code>
 - <code title="delete /objectives/{objective_id}">client.objectives.<a href="./src/delegate/resources/objectives.py">delete</a>(objective_id) -> <a href="./src/delegate/types/objective.py">Objective</a></code>
 - <code title="post /objectives/{objective_id}:cancel">client.objectives.<a href="./src/delegate/resources/objectives.py">cancel</a>(objective_id, \*\*<a href="src/delegate/types/objective_cancel_params.py">params</a>) -> <a href="./src/delegate/types/objective.py">Objective</a></code>
-- <code title="get /objectives/{objective_id}:stream">client.objectives.<a href="./src/delegate/resources/objectives.py">stream_events</a>(objective_id) -> object</code>
 
 # Spans
 
@@ -121,6 +120,7 @@ Types:
 ```python
 from delegate.types import (
     Message,
+    ReasoningContent,
     TextContent,
     ToolRequestContent,
     ToolResponseContent,

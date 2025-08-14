@@ -219,39 +219,6 @@ class ObjectivesResource(SyncAPIResource):
             cast_to=Objective,
         )
 
-    def stream_events(
-        self,
-        objective_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """
-        Stream events for an objective by its unique ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not objective_id:
-            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
-        return self._get(
-            f"/objectives/{objective_id}:stream",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
 
 class AsyncObjectivesResource(AsyncAPIResource):
     @cached_property
@@ -448,39 +415,6 @@ class AsyncObjectivesResource(AsyncAPIResource):
             cast_to=Objective,
         )
 
-    async def stream_events(
-        self,
-        objective_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """
-        Stream events for an objective by its unique ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not objective_id:
-            raise ValueError(f"Expected a non-empty value for `objective_id` but received {objective_id!r}")
-        return await self._get(
-            f"/objectives/{objective_id}:stream",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
 
 class ObjectivesResourceWithRawResponse:
     def __init__(self, objectives: ObjectivesResource) -> None:
@@ -500,9 +434,6 @@ class ObjectivesResourceWithRawResponse:
         )
         self.cancel = to_raw_response_wrapper(
             objectives.cancel,
-        )
-        self.stream_events = to_raw_response_wrapper(
-            objectives.stream_events,
         )
 
 
@@ -525,9 +456,6 @@ class AsyncObjectivesResourceWithRawResponse:
         self.cancel = async_to_raw_response_wrapper(
             objectives.cancel,
         )
-        self.stream_events = async_to_raw_response_wrapper(
-            objectives.stream_events,
-        )
 
 
 class ObjectivesResourceWithStreamingResponse:
@@ -549,9 +477,6 @@ class ObjectivesResourceWithStreamingResponse:
         self.cancel = to_streamed_response_wrapper(
             objectives.cancel,
         )
-        self.stream_events = to_streamed_response_wrapper(
-            objectives.stream_events,
-        )
 
 
 class AsyncObjectivesResourceWithStreamingResponse:
@@ -572,7 +497,4 @@ class AsyncObjectivesResourceWithStreamingResponse:
         )
         self.cancel = async_to_streamed_response_wrapper(
             objectives.cancel,
-        )
-        self.stream_events = async_to_streamed_response_wrapper(
-            objectives.stream_events,
         )
