@@ -56,14 +56,6 @@ from .objectives import (
     ObjectivesResourceWithStreamingResponse,
     AsyncObjectivesResourceWithStreamingResponse,
 )
-from .notifications import (
-    NotificationsResource,
-    AsyncNotificationsResource,
-    NotificationsResourceWithRawResponse,
-    AsyncNotificationsResourceWithRawResponse,
-    NotificationsResourceWithStreamingResponse,
-    AsyncNotificationsResourceWithStreamingResponse,
-)
 
 __all__ = [
     "ObjectivesResource",
@@ -108,10 +100,4 @@ __all__ = [
     "AsyncMessagesResourceWithRawResponse",
     "MessagesResourceWithStreamingResponse",
     "AsyncMessagesResourceWithStreamingResponse",
-    "NotificationsResource",
-    "AsyncNotificationsResource",
-    "NotificationsResourceWithRawResponse",
-    "AsyncNotificationsResourceWithRawResponse",
-    "NotificationsResourceWithStreamingResponse",
-    "AsyncNotificationsResourceWithStreamingResponse",
 ]

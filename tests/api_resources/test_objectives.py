@@ -226,48 +226,6 @@ class TestObjectives:
                 objective_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_stream_events(self, client: Delegate) -> None:
-        objective = client.objectives.stream_events(
-            "objective_id",
-        )
-        assert_matches_type(object, objective, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_stream_events(self, client: Delegate) -> None:
-        response = client.objectives.with_raw_response.stream_events(
-            "objective_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        objective = response.parse()
-        assert_matches_type(object, objective, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_stream_events(self, client: Delegate) -> None:
-        with client.objectives.with_streaming_response.stream_events(
-            "objective_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            objective = response.parse()
-            assert_matches_type(object, objective, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_stream_events(self, client: Delegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `objective_id` but received ''"):
-            client.objectives.with_raw_response.stream_events(
-                "",
-            )
-
 
 class TestAsyncObjectives:
     parametrize = pytest.mark.parametrize(
@@ -478,46 +436,4 @@ class TestAsyncObjectives:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `objective_id` but received ''"):
             await async_client.objectives.with_raw_response.cancel(
                 objective_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_stream_events(self, async_client: AsyncDelegate) -> None:
-        objective = await async_client.objectives.stream_events(
-            "objective_id",
-        )
-        assert_matches_type(object, objective, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_stream_events(self, async_client: AsyncDelegate) -> None:
-        response = await async_client.objectives.with_raw_response.stream_events(
-            "objective_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        objective = await response.parse()
-        assert_matches_type(object, objective, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_stream_events(self, async_client: AsyncDelegate) -> None:
-        async with async_client.objectives.with_streaming_response.stream_events(
-            "objective_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            objective = await response.parse()
-            assert_matches_type(object, objective, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_stream_events(self, async_client: AsyncDelegate) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `objective_id` but received ''"):
-            await async_client.objectives.with_raw_response.stream_events(
-                "",
             )
