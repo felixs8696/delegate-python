@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Union
-from typing_extensions import Required, TypeAlias, TypedDict
+from typing import Dict, Union, Optional
+from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .text_content_param import TextContentParam
 from .tool_request_content_param import ToolRequestContentParam
 from .tool_response_content_param import ToolResponseContentParam
 
-__all__ = ["EventCreateParams", "Content"]
+__all__ = ["EventCreateParams", "Content", "ContentReasoningContent"]
 
 
 class EventCreateParams(TypedDict, total=False):
@@ -20,4 +20,27 @@ class EventCreateParams(TypedDict, total=False):
     """The objective id the event is for"""
 
 
-Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam]
+class ContentReasoningContent(TypedDict, total=False):
+    author: Required[Literal["system", "user", "assistant"]]
+    """
+    The role of the messages author, in this case `system`, `user`, `assistant`, or
+    `tool`.
+    """
+
+    content: Required[str]
+    """The reasoning content or chain-of-thought text"""
+
+    reasoning_id: Optional[str]
+    """The ID of the reasoning item"""
+
+    summary: Optional[str]
+    """A short reasoning summary"""
+
+    type: Literal["reasoning"]
+    """The type of the message, in this case `reasoning`."""
+
+    usage: Optional[Dict[str, object]]
+    """Usage information for reasoning tokens"""
+
+
+Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam, ContentReasoningContent]
