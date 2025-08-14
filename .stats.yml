@@ -1,4 +1,4 @@
-configured_endpoints: 38
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/delegate%2Fdelegate-120dc2e56a897a4499d0bfb0d986e2389de3406f0d7742e0eca482bd2d6cf66f.yml
-openapi_spec_hash: 30d371a4245ddbeaa9e4b517f8d9ade1
+configured_endpoints: 43
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/delegate%2Fdelegate-ae172c195df258f52f8b73fe3230760608597e87cc13d96530f7e54a78a82aa9.yml
+openapi_spec_hash: 8dcd4a1a44fcc2312c6c1aa6243b778f
 config_hash: 6c506b0e63fa64c5862d46e1d16ffe89
