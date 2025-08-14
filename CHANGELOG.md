@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.0 (2025-08-14)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/felixs8696/delegate-python/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** update via SDK Studio ([6b1e54f](https://github.com/felixs8696/delegate-python/commit/6b1e54ff928a4e2cb08ee3ba4205c5340eb7be3c))
+* **api:** update via SDK Studio ([5adc710](https://github.com/felixs8696/delegate-python/commit/5adc710ec88a6ff5b5a6a0af5ceb3e7a473c6855))
+* **api:** update via SDK Studio ([2069b9d](https://github.com/felixs8696/delegate-python/commit/2069b9d2e8d5caa97e6258d6481d66c45d000960))
+* **api:** update via SDK Studio ([7addd28](https://github.com/felixs8696/delegate-python/commit/7addd287b411e6d000c5bc790076f615bab51b74))
+
 ## 0.6.0 (2025-08-12)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/felixs8696/delegate-python/compare/v0.5.0...v0.6.0)
