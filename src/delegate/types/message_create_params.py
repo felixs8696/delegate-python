@@ -9,7 +9,7 @@ from .text_content_param import TextContentParam
 from .tool_request_content_param import ToolRequestContentParam
 from .tool_response_content_param import ToolResponseContentParam
 
-__all__ = ["MessageCreateParams", "Content"]
+__all__ = ["MessageCreateParams", "Content", "ContentReasoningContent"]
 
 
 class MessageCreateParams(TypedDict, total=False):
@@ -29,4 +29,27 @@ class MessageCreateParams(TypedDict, total=False):
     """Status of message streaming"""
 
 
-Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam]
+class ContentReasoningContent(TypedDict, total=False):
+    author: Required[Literal["system", "user", "assistant"]]
+    """
+    The role of the messages author, in this case `system`, `user`, `assistant`, or
+    `tool`.
+    """
+
+    content: Required[str]
+    """The reasoning content or chain-of-thought text"""
+
+    reasoning_id: Optional[str]
+    """The ID of the reasoning item"""
+
+    summary: Optional[str]
+    """A short reasoning summary"""
+
+    type: Literal["reasoning"]
+    """The type of the message, in this case `reasoning`."""
+
+    usage: Optional[Dict[str, object]]
+    """Usage information for reasoning tokens"""
+
+
+Content: TypeAlias = Union[TextContentParam, ToolRequestContentParam, ToolResponseContentParam, ContentReasoningContent]

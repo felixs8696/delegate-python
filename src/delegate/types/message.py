@@ -10,10 +10,35 @@ from .text_content import TextContent
 from .tool_request_content import ToolRequestContent
 from .tool_response_content import ToolResponseContent
 
-__all__ = ["Message", "Content"]
+__all__ = ["Message", "Content", "ContentReasoningContent"]
+
+
+class ContentReasoningContent(BaseModel):
+    author: Literal["system", "user", "assistant"]
+    """
+    The role of the messages author, in this case `system`, `user`, `assistant`, or
+    `tool`.
+    """
+
+    content: str
+    """The reasoning content or chain-of-thought text"""
+
+    reasoning_id: Optional[str] = None
+    """The ID of the reasoning item"""
+
+    summary: Optional[str] = None
+    """A short reasoning summary"""
+
+    type: Optional[Literal["reasoning"]] = None
+    """The type of the message, in this case `reasoning`."""
+
+    usage: Optional[Dict[str, object]] = None
+    """Usage information for reasoning tokens"""
+
 
 Content: TypeAlias = Annotated[
-    Union[TextContent, ToolRequestContent, ToolResponseContent], PropertyInfo(discriminator="type")
+    Union[TextContent, ToolRequestContent, ToolResponseContent, ContentReasoningContent],
+    PropertyInfo(discriminator="type"),
 ]
 
 
