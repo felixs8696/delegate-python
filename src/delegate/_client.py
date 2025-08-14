@@ -30,7 +30,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import spans, users, events, states, messages, objectives
+from .resources import spans, users, events, states, messages, objectives, notifications
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -67,6 +67,7 @@ class Delegate(SyncAPIClient):
     users: users.UsersResource
     channels: channels.ChannelsResource
     messages: messages.MessagesResource
+    notifications: notifications.NotificationsResource
     with_raw_response: DelegateWithRawResponse
     with_streaming_response: DelegateWithStreamedResponse
 
@@ -151,6 +152,7 @@ class Delegate(SyncAPIClient):
         self.users = users.UsersResource(self)
         self.channels = channels.ChannelsResource(self)
         self.messages = messages.MessagesResource(self)
+        self.notifications = notifications.NotificationsResource(self)
         self.with_raw_response = DelegateWithRawResponse(self)
         self.with_streaming_response = DelegateWithStreamedResponse(self)
 
@@ -290,6 +292,7 @@ class AsyncDelegate(AsyncAPIClient):
     users: users.AsyncUsersResource
     channels: channels.AsyncChannelsResource
     messages: messages.AsyncMessagesResource
+    notifications: notifications.AsyncNotificationsResource
     with_raw_response: AsyncDelegateWithRawResponse
     with_streaming_response: AsyncDelegateWithStreamedResponse
 
@@ -374,6 +377,7 @@ class AsyncDelegate(AsyncAPIClient):
         self.users = users.AsyncUsersResource(self)
         self.channels = channels.AsyncChannelsResource(self)
         self.messages = messages.AsyncMessagesResource(self)
+        self.notifications = notifications.AsyncNotificationsResource(self)
         self.with_raw_response = AsyncDelegateWithRawResponse(self)
         self.with_streaming_response = AsyncDelegateWithStreamedResponse(self)
 
@@ -514,6 +518,7 @@ class DelegateWithRawResponse:
         self.users = users.UsersResourceWithRawResponse(client.users)
         self.channels = channels.ChannelsResourceWithRawResponse(client.channels)
         self.messages = messages.MessagesResourceWithRawResponse(client.messages)
+        self.notifications = notifications.NotificationsResourceWithRawResponse(client.notifications)
 
         self.retrieve = to_raw_response_wrapper(
             client.retrieve,
@@ -529,6 +534,7 @@ class AsyncDelegateWithRawResponse:
         self.users = users.AsyncUsersResourceWithRawResponse(client.users)
         self.channels = channels.AsyncChannelsResourceWithRawResponse(client.channels)
         self.messages = messages.AsyncMessagesResourceWithRawResponse(client.messages)
+        self.notifications = notifications.AsyncNotificationsResourceWithRawResponse(client.notifications)
 
         self.retrieve = async_to_raw_response_wrapper(
             client.retrieve,
@@ -544,6 +550,7 @@ class DelegateWithStreamedResponse:
         self.users = users.UsersResourceWithStreamingResponse(client.users)
         self.channels = channels.ChannelsResourceWithStreamingResponse(client.channels)
         self.messages = messages.MessagesResourceWithStreamingResponse(client.messages)
+        self.notifications = notifications.NotificationsResourceWithStreamingResponse(client.notifications)
 
         self.retrieve = to_streamed_response_wrapper(
             client.retrieve,
@@ -559,6 +566,7 @@ class AsyncDelegateWithStreamedResponse:
         self.users = users.AsyncUsersResourceWithStreamingResponse(client.users)
         self.channels = channels.AsyncChannelsResourceWithStreamingResponse(client.channels)
         self.messages = messages.AsyncMessagesResourceWithStreamingResponse(client.messages)
+        self.notifications = notifications.AsyncNotificationsResourceWithStreamingResponse(client.notifications)
 
         self.retrieve = async_to_streamed_response_wrapper(
             client.retrieve,
